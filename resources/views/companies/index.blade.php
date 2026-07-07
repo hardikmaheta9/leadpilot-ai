@@ -19,7 +19,7 @@
                         <th>Email</th>
                         <th>Industry</th>
                         <th>Status</th>
-                        <th width="160">Actions</th>
+                        <th width="140">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,24 +28,42 @@
                             <td>
                                 <strong>{{ $company->company_name }}</strong>
                                 <br>
-                                <small class="text-muted">{{ $company->city }} {{ $company->country }}</small>
+                                <small class="text-muted">
+                                    {{ trim(($company->city ?? '') . ' ' . ($company->country ?? '')) ?: '-' }}
+                                </small>
                             </td>
-                            <td>{{ $company->website ?? '-' }}</td>
+
+                            <td>
+                                @if($company->website)
+                                    <a href="{{ $company->website }}" target="_blank">
+                                        {{ $company->website }}
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+
                             <td>{{ $company->email ?? '-' }}</td>
                             <td>{{ $company->industry ?? '-' }}</td>
+
                             <td>
-                               <x-status-badge :status="$company->status" />
+                                <x-status-badge :status="$company->status" />
                             </td>
+
                             <td>
                                 <a href="{{ route('companies.edit', $company->uuid) }}" class="btn btn-sm btn-outline-primary">
-                                    Edit
+                                    <i class="fa-solid fa-pen"></i>
                                 </a>
 
                                 <form action="{{ route('companies.destroy', $company->uuid) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this company?')">
-                                        Delete
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-sm btn-outline-danger"
+                                        onclick="return confirm('Are you sure you want to delete {{ addslashes($company->company_name) }}?')">
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
                             </td>
@@ -68,5 +86,5 @@
         <div class="mt-3">
             {{ $companies->links() }}
         </div>
-   </x-card>
+    </x-card>
 @endsection

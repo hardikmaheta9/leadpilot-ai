@@ -9,7 +9,6 @@
 
 <x-card>
     <form method="POST" action="{{ route('companies.update', $company->uuid) }}">
-        @csrf
         @method('PUT')
 
         @include('companies.partials.form')

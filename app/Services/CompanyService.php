@@ -3,22 +3,23 @@
 namespace App\Services;
 
 use App\Models\Company;
-use App\Repositories\CompanyRepository;
-use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\Contracts\CompanyRepositoryInterface;
+use App\Services\Contracts\CompanyServiceInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class CompanyService
+class CompanyService implements CompanyServiceInterface
 {
     public function __construct(
-        protected CompanyRepository $companyRepository
+        protected CompanyRepositoryInterface $companyRepository
     ) {
     }
 
-    public function getAll(): Collection
+    public function paginate(int $perPage = 15): LengthAwarePaginator
     {
-        return $this->companyRepository->all();
+        return $this->companyRepository->paginate($perPage);
     }
 
-    public function getByUuid(string $uuid): ?Company
+    public function findByUuid(string $uuid): ?Company
     {
         return $this->companyRepository->findByUuid($uuid);
     }

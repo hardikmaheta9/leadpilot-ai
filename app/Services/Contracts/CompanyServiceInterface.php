@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Services\Contracts;
+
+use App\Models\Company;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+interface CompanyServiceInterface
+{
+    public function paginate(int $perPage = 15): LengthAwarePaginator;
+
+    public function findByUuid(string $uuid): ?Company;
+
+    public function create(array $data): Company;
+
+    public function update(Company $company, array $data): bool;
+
+    public function delete(Company $company): bool;
+}

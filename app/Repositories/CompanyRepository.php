@@ -3,13 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Company;
-use Illuminate\Database\Eloquent\Collection;
+use App\Repositories\Contracts\CompanyRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class CompanyRepository
+class CompanyRepository implements CompanyRepositoryInterface
 {
-    public function all(): Collection
+    public function paginate(int $perPage = 15): LengthAwarePaginator
     {
-        return Company::latest()->get();
+        return Company::query()
+            ->latest()
+            ->paginate($perPage);
     }
 
     public function findByUuid(string $uuid): ?Company

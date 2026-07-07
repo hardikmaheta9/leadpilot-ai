@@ -2,63 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
+use App\Services\Contracts\CompanyServiceInterface;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(
+        protected CompanyServiceInterface $companyService
+    ) {}
+
+    public function index(): View
     {
-        //
+        $companies = $this->companyService->paginate();
+
+        return view('companies.index', compact('companies'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('companies.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreCompanyRequest $request): RedirectResponse
     {
-        //
+        $this->companyService->create($request->validated());
+
+        return redirect()
+            ->route('companies.index')
+            ->with('success', 'Company created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(string $uuid): View
     {
-        //
+        $company = $this->companyService->findByUuid($uuid);
+
+        abort_if(! $company, 404);
+
+        return view('companies.edit', compact('company'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(UpdateCompanyRequest $request, string $uuid): RedirectResponse
     {
-        //
+        $company = $this->companyService->findByUuid($uuid);
+
+        abort_if(! $company, 404);
+
+        $this->companyService->update($company, $request->validated());
+
+        return redirect()
+            ->route('companies.index')
+            ->with('success', 'Company updated successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(string $uuid): RedirectResponse
     {
-        //
-    }
+        $company = $this->companyService->findByUuid($uuid);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        abort_if(! $company, 404);
+
+        $this->companyService->delete($company);
+
+        return redirect()
+            ->route('companies.index')
+            ->with('success', 'Company deleted successfully.');
     }
 }

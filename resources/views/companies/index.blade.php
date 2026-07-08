@@ -51,6 +51,10 @@
                             </td>
 
                             <td>
+                                <a href="{{ route('companies.show', $company->uuid) }}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+
                                 <a href="{{ route('companies.edit', $company->uuid) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="fa-solid fa-pen"></i>
                                 </a>

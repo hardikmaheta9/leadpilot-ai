@@ -35,6 +35,15 @@ class CompanyController extends Controller
             ->with('success', 'Company created successfully.');
     }
 
+    public function show(string $uuid): View
+    {
+        $company = $this->companyService->findByUuid($uuid);
+
+        abort_if(! $company, 404);
+
+        return view('companies.show', compact('company'));
+    }
+
     public function edit(string $uuid): View
     {
         $company = $this->companyService->findByUuid($uuid);

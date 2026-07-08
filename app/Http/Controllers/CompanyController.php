@@ -46,7 +46,13 @@ class CompanyController extends Controller
 
         abort_if(! $company, 404);
 
-        return view('companies.show', compact('company'));
+        $activities = \App\Models\Activity::where('module', 'Company')
+                    ->where('module_uuid', $company->uuid)
+                    ->latest()
+                    ->take(10)
+                    ->get();
+
+        return view('companies.show', compact('company', 'activities'));
     }
 
     public function edit(string $uuid): View

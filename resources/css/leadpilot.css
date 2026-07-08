@@ -538,3 +538,27 @@ body{
     background:#EFF6FF;
     color:var(--lp-primary);
 }
+
+/* Company Activity Timeline */
+.lp-timeline{
+    background:#FFFFFF;
+    border:1px solid var(--lp-border);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.lp-timeline-item{
+    position:relative;
+    display:flex;
+    gap:14px;
+    padding-bottom:20px;
+}
+
+.lp-timeline-dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:var(--lp-primary);
+    margin-top:5px;
+}   

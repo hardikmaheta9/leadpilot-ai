@@ -54,5 +54,9 @@
         </x-cards.card>
     </div>
 </div>
-
+<div class="row mt-4">
+    <div class="col-lg-12">
+        <x-crm.activity-timeline :activities="$activities" />
+    </div>
+</div>
 @endsection

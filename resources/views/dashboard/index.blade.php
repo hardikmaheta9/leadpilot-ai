@@ -97,6 +97,23 @@
             @endforelse
         </x-cards.card>
     </div>
+
+    <div class="row mt-4">
+
+       <div class="col-lg-6">
+
+        <x-dashboard.business-health
+
+            :totalCompanies="$totalCompanies"
+
+            :companiesWithWebsite="$companiesWithWebsite"
+
+            :companiesWithEmail="$companiesWithEmail"
+
+        />
+
+        </div>
+    </div>
 </div>
 </div>
 

@@ -2,92 +2,57 @@
 
 @section('content')
 
-<x-layout.page-header
-    :title="$company->company_name"
-    subtitle="Company Details"
-/>
-
-<x-cards.card>
-
+<x-crm.company-header :company="$company" />
+<x-crm.company-tabs />
 <div class="row">
+    <div class="col-lg-8">
+        <x-cards.card>
+            <h5 class="mb-4">Company Information</h5>
 
-    <div class="col-md-6 mb-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <strong>Website</strong>
+                    <p>{{ $company->website ?: '-' }}</p>
+                </div>
 
-        <h6 class="text-muted">Company</h6>
-        <p>{{ $company->company_name }}</p>
+                <div class="col-md-6 mb-3">
+                    <strong>Email</strong>
+                    <p>{{ $company->email ?: '-' }}</p>
+                </div>
 
+                <div class="col-md-6 mb-3">
+                    <strong>Phone</strong>
+                    <p>{{ $company->phone ?: '-' }}</p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Industry</strong>
+                    <p>{{ $company->industry ?: '-' }}</p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>City</strong>
+                    <p>{{ $company->city ?: '-' }}</p>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <strong>Status</strong><br>
+                    <x-feedback.status-badge :status="$company->status" />
+                </div>
+            </div>
+        </x-cards.card>
     </div>
 
-    <div class="col-md-6 mb-4">
+    <div class="col-lg-4">
+        <x-cards.card>
+            <h5>Company Health</h5>
+            <hr>
 
-        <h6 class="text-muted">Website</h6>
-
-        @if($company->website)
-            <a href="{{ $company->website }}" target="_blank">
-                {{ $company->website }}
-            </a>
-        @else
-            -
-        @endif
-
+            <div class="mb-3">Website: {{ $company->website ? '✅' : '❌' }}</div>
+            <div class="mb-3">Email: {{ $company->email ? '✅' : '❌' }}</div>
+            <div>Phone: {{ $company->phone ? '✅' : '❌' }}</div>
+        </x-cards.card>
     </div>
-
-    <div class="col-md-6 mb-4">
-
-        <h6 class="text-muted">Email</h6>
-
-        {{ $company->email ?? '-' }}
-
-    </div>
-
-    <div class="col-md-6 mb-4">
-
-        <h6 class="text-muted">Phone</h6>
-
-        {{ $company->phone ?? '-' }}
-
-    </div>
-
-    <div class="col-md-6 mb-4">
-
-        <h6 class="text-muted">Industry</h6>
-
-        {{ $company->industry ?? '-' }}
-
-    </div>
-
-    <div class="col-md-6 mb-4">
-
-        <h6 class="text-muted">Status</h6>
-
-        <x-feedback.status-badge :status="$company->status"/>
-
-    </div>
-
 </div>
-
-<hr>
-
-<div class="d-flex gap-2">
-
-    <a href="{{ route('companies.edit',$company->uuid) }}"
-       class="btn btn-primary">
-
-        <i class="fa-solid fa-pen"></i>
-
-        Edit
-
-    </a>
-
-    <a href="{{ route('companies.index') }}"
-       class="btn btn-secondary">
-
-        Back
-
-    </a>
-
-</div>
-
-</x-cards.card>
 
 @endsection

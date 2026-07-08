@@ -18,6 +18,8 @@ class DashboardController extends Controller
             'customerCompanies' => Company::where('status', 'customer')->count(),
             'recentCompanies' => Company::latest()->take(5)->get(),
             'recentActivities' => Activity::latest()->take(8)->get(),
+            'companiesWithWebsite' => Company::whereNotNull('website')->where('website', '!=', '')->count(),
+            'companiesWithEmail' => Company::whereNotNull('email') ->where('email', '!=', '')->count(),
         ]);
     }
 }

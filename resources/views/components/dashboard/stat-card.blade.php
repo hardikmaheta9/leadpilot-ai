@@ -1,28 +1,56 @@
-<div class="col-md-3 mb-4">
+<div class="col-xl-3 col-lg-6 mb-4">
 
-    <div class="lp-card h-100">
+    <div class="lp-stat-card">
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-start">
 
             <div>
 
-                <small class="text-muted">
+                <div class="lp-stat-title">
                     {{ $title }}
-                </small>
+                </div>
 
-                <h2 class="mt-2">
+                <div class="lp-stat-number">
                     {{ $value }}
-                </h2>
+                </div>
+
+                <div class="lp-stat-footer">
+
+                    <span class="lp-stat-growth">
+
+                        <i class="fa-solid fa-arrow-trend-up me-1"></i>
+
+                        {{ $growth ?? '+0' }}
+
+                    </span>
+
+                </div>
 
             </div>
 
-            <div>
+            <div class="lp-stat-icon">
 
-                <i class="{{ $icon }} fa-2x text-primary"></i>
+                <i class="{{ $icon }}"></i>
 
             </div>
 
         </div>
+
+        @isset($route)
+
+            <div class="mt-4">
+
+                <a href="{{ $route }}" class="lp-card-link">
+
+                    View Details
+
+                    <i class="fa-solid fa-arrow-right ms-1"></i>
+
+                </a>
+
+            </div>
+
+        @endisset
 
     </div>
 

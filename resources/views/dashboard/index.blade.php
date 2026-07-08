@@ -5,29 +5,36 @@
 <x-dashboard.welcome-banner />
 
 <div class="row">
+
     <x-dashboard.stat-card
-        title="Total Companies"
+        title="Companies"
         :value="$totalCompanies"
         icon="fa-solid fa-building"
+        growth="+2 This Week"
+        :route="route('companies.index')"
     />
 
     <x-dashboard.stat-card
         title="Prospects"
         :value="$prospectCompanies"
         icon="fa-solid fa-bullseye"
+        growth="+0"
     />
 
     <x-dashboard.stat-card
         title="Qualified"
         :value="$qualifiedCompanies"
         icon="fa-solid fa-circle-check"
+        growth="+0"
     />
 
     <x-dashboard.stat-card
         title="Customers"
         :value="$customerCompanies"
         icon="fa-solid fa-handshake"
+        growth="+0"
     />
+
 </div>
 
 <div class="row">
@@ -48,20 +55,23 @@
             @empty
                 <p class="text-muted mb-0">No companies found.</p>
             @endforelse
-</x-cards.card>
+        </x-cards.card>
     </div>
 
     <div class="col-md-4">
-        <x-cards.card>
-            <h5 class="mb-3">AI Suggestions</h5>
-
-            <ul class="mb-0">
-                <li>Add more company details for better AI analysis.</li>
-                <li>Start by adding prospect companies.</li>
-                <li>Next: connect contacts with companies.</li>
-            </ul>
-</x-cards.card>
+        <x-dashboard.ai-assistant
+            :totalCompanies="$totalCompanies"
+            :prospectCompanies="$prospectCompanies"
+            :qualifiedCompanies="$qualifiedCompanies"
+        />
     </div>
+
+    <div class="row mt-4">
+    <div class="col-md-12">
+        <x-dashboard.quick-actions />
+    </div>
+    </div>
+
     <div class="row mt-4">
         
     <div class="col-md-12">
@@ -85,7 +95,7 @@
             @empty
                 <p class="text-muted mb-0">No recent activities found.</p>
             @endforelse
-</x-cards.card>
+        </x-cards.card>
     </div>
 </div>
 </div>

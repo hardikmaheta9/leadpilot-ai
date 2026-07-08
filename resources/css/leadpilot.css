@@ -244,3 +244,173 @@ body{
     font-weight: 600;
     padding: 12px 20px;
 }
+
+/* ==========================================================
+   KPI Cards
+   ========================================================== */
+
+.lp-stat-card{
+
+    background:#FFFFFF;
+
+    border-radius:20px;
+
+    padding:24px;
+
+    border:1px solid var(--lp-border);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+
+    transition:.25s;
+}
+
+.lp-stat-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 20px 50px rgba(0,0,0,.10);
+}
+
+.lp-stat-title{
+
+    color:var(--lp-muted);
+
+    font-size:14px;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:.04em;
+}
+
+.lp-stat-number{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    margin:12px 0;
+}
+
+.lp-stat-icon{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:16px;
+
+    background:#EFF6FF;
+
+    color:var(--lp-primary);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+}
+
+.lp-stat-growth{
+
+    color:var(--lp-success);
+
+    font-weight:600;
+}
+
+.lp-card-link{
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+/* ==========================================================
+   AI Assistant
+   ========================================================== */
+
+.lp-ai-card{
+
+    background:linear-gradient(
+        180deg,
+        #FFFFFF,
+        #F8FAFC
+    );
+
+    border-radius:20px;
+
+    padding:24px;
+
+    border:1px solid #E5E7EB;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.lp-ai-message{
+
+    background:#EFF6FF;
+
+    border-radius:14px;
+
+    padding:16px;
+
+    margin-bottom:20px;
+}
+
+.lp-ai-message ul{
+
+    margin:0;
+
+    padding-left:20px;
+}
+
+.lp-ai-message li{
+
+    margin-bottom:10px;
+}
+
+/* ==========================================================
+   Quick Actions
+   ========================================================== */
+
+.lp-quick-actions{
+    background:#FFFFFF;
+    border-radius:20px;
+    padding:24px;
+    border:1px solid var(--lp-border);
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.lp-action-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px;
+    border-radius:16px;
+    background:#F8FAFC;
+    border:1px solid #E5E7EB;
+    color:#111827;
+    text-decoration:none;
+    font-weight:600;
+    transition:.25s;
+}
+
+.lp-action-card i{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:#EFF6FF;
+    color:var(--lp-primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.lp-action-card:hover{
+    transform:translateY(-3px);
+    background:#FFFFFF;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}

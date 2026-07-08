@@ -40,19 +40,25 @@ class CompanyController extends Controller
             ->with('success', 'Company created successfully.');
     }
 
-    public function show(string $uuid): View
+    public function show(string $uuid, \Illuminate\Http\Request $request): View
     {
-        $company = $this->companyService->findByUuid($uuid);
+            $company = $this->companyService->findByUuid($uuid);
 
-        abort_if(! $company, 404);
+            abort_if(! $company, 404);
 
-        $activities = \App\Models\Activity::where('module', 'Company')
-                    ->where('module_uuid', $company->uuid)
-                    ->latest()
-                    ->take(10)
-                    ->get();
+            $activities = \App\Models\Activity::where('module', 'Company')
+                ->where('module_uuid', $company->uuid)
+                ->latest()
+                ->take(10)
+                ->get();
 
-        return view('companies.show', compact('company', 'activities'));
+            $notes = \App\Models\CompanyNote::where('company_uuid', $company->uuid)
+                ->latest()
+                ->get();
+
+            $activeTab = $request->get('tab', 'overview');
+
+            return view('companies.show', compact('company', 'activities', 'notes', 'activeTab'));
     }
 
     public function edit(string $uuid): View

@@ -3,11 +3,15 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CompanyNoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/companies/{companyUuid}/notes', [CompanyNoteController::class, 'store'])
+    ->name('companies.notes.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

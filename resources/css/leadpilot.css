@@ -562,3 +562,37 @@ body{
     background:var(--lp-primary);
     margin-top:5px;
 }   
+
+/*comopany notes card*/
+
+.lp-notes-card{
+    background:#FFFFFF;
+    border:1px solid var(--lp-border);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+/* ==========================================================
+   Company Notes
+   ========================================================== */
+
+.lp-note-item{
+
+    background:#F8FAFC;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    margin-bottom:18px;
+
+    border-left:4px solid var(--lp-primary);
+
+    transition:.25s;
+}
+
+.lp-note-item:hover{
+
+    background:#EFF6FF;
+}

@@ -8,7 +8,27 @@
         action-label="Add Company"
         action-icon="fa-solid fa-plus"
     />
+    <form method="GET" action="{{ route('companies.index') }}" class="mb-3">
+    <div class="input-group">
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search companies by name, website, email, industry, city or country..."
+            value="{{ $search ?? '' }}"
+        >
 
+        <button class="btn btn-primary">
+            <i class="fa-solid fa-magnifying-glass me-1"></i> Search
+        </button>
+
+        @if(!empty($search))
+            <a href="{{ route('companies.index') }}" class="btn btn-outline-secondary">
+                Reset
+            </a>
+        @endif
+    </div>
+</form>
     <x-card>
         <div class="table-responsive">
             <table class="table align-middle mb-0">

@@ -8,12 +8,23 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CompanyRepository implements CompanyRepositoryInterface
 {
-    public function paginate(int $perPage = 15): LengthAwarePaginator
-    {
-        return Company::query()
-            ->latest()
-            ->paginate($perPage);
-    }
+    public function paginate(int $perPage = 15, ?string $search = null): LengthAwarePaginator
+        {
+            return Company::query()
+                ->when($search, function ($query, $search) {
+                    $query->where(function ($q) use ($search) {
+                        $q->where('company_name', 'like', "%{$search}%")
+                        ->orWhere('website', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%")
+                        ->orWhere('industry', 'like', "%{$search}%")
+                        ->orWhere('city', 'like', "%{$search}%")
+                        ->orWhere('country', 'like', "%{$search}%");
+                    });
+                })
+                ->latest()
+                ->paginate($perPage)
+                ->withQueryString();
+        }
 
     public function findByUuid(string $uuid): ?Company
     {

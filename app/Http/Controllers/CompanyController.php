@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Services\Contracts\CompanyServiceInterface;
@@ -14,11 +14,16 @@ class CompanyController extends Controller
         protected CompanyServiceInterface $companyService
     ) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $companies = $this->companyService->paginate();
+        $search = $request->get('search');
 
-        return view('companies.index', compact('companies'));
+        $companies = $this->companyService->paginate(
+            perPage: 15,
+            search: $search
+        );
+
+        return view('companies.index', compact('companies', 'search'));
     }
 
     public function create(): View

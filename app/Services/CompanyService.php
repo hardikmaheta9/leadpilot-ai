@@ -14,9 +14,9 @@ class CompanyService implements CompanyServiceInterface
     ) {
     }
 
-    public function paginate(int $perPage = 15): LengthAwarePaginator
+   public function paginate(int $perPage = 15, ?string $search = null): LengthAwarePaginator
     {
-        return $this->companyRepository->paginate($perPage);
+        return $this->companyRepository->paginate($perPage, $search);
     }
 
     public function findByUuid(string $uuid): ?Company

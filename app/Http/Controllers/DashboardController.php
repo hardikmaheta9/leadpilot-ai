@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -10,6 +11,11 @@ class DashboardController extends Controller
     {
         return view('dashboard.index', [
             'pageTitle' => 'Dashboard',
+            'totalCompanies' => Company::count(),
+            'prospectCompanies' => Company::where('status', 'prospect')->count(),
+            'qualifiedCompanies' => Company::where('status', 'qualified')->count(),
+            'customerCompanies' => Company::where('status', 'customer')->count(),
+            'recentCompanies' => Company::latest()->take(5)->get(),
         ]);
     }
 }

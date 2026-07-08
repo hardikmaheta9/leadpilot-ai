@@ -1,38 +1,70 @@
-@extends('layouts.app')
+@extends('layouts.crm')
 
 @section('content')
-    <div class="mb-4">
-        <h2 class="fw-bold">Dashboard</h2>
-        <p class="text-muted">Welcome to LeadPilot AI — your business development command center.</p>
+
+<x-page-header
+    title="Dashboard"
+    subtitle="Your LeadPilot AI business development command center."
+/>
+
+<div class="row">
+    <x-dashboard.stat-card
+        title="Total Companies"
+        :value="$totalCompanies"
+        icon="fa-solid fa-building"
+    />
+
+    <x-dashboard.stat-card
+        title="Prospects"
+        :value="$prospectCompanies"
+        icon="fa-solid fa-bullseye"
+    />
+
+    <x-dashboard.stat-card
+        title="Qualified"
+        :value="$qualifiedCompanies"
+        icon="fa-solid fa-circle-check"
+    />
+
+    <x-dashboard.stat-card
+        title="Customers"
+        :value="$customerCompanies"
+        icon="fa-solid fa-handshake"
+    />
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <x-card>
+            <h5 class="mb-3">Recent Companies</h5>
+
+            @forelse($recentCompanies as $company)
+                <div class="d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <strong>{{ $company->company_name }}</strong>
+                        <br>
+                        <small class="text-muted">{{ $company->industry ?? '-' }}</small>
+                    </div>
+
+                    <x-status-badge :status="$company->status" />
+                </div>
+            @empty
+                <p class="text-muted mb-0">No companies found.</p>
+            @endforelse
+        </x-card>
     </div>
 
-    <div class="row g-4">
-        <div class="col-md-3">
-            <div class="lp-card">
-                <small class="text-muted">Today’s Leads</small>
-                <h3 class="mt-2">0</h3>
-            </div>
-        </div>
+    <div class="col-md-4">
+        <x-card>
+            <h5 class="mb-3">AI Suggestions</h5>
 
-        <div class="col-md-3">
-            <div class="lp-card">
-                <small class="text-muted">Hot Leads</small>
-                <h3 class="mt-2">0</h3>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="lp-card">
-                <small class="text-muted">Pending Follow-ups</small>
-                <h3 class="mt-2">0</h3>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="lp-card">
-                <small class="text-muted">AI Opportunities</small>
-                <h3 class="mt-2">0</h3>
-            </div>
-        </div>
+            <ul class="mb-0">
+                <li>Add more company details for better AI analysis.</li>
+                <li>Start by adding prospect companies.</li>
+                <li>Next: connect contacts with companies.</li>
+            </ul>
+        </x-card>
     </div>
+</div>
+
 @endsection

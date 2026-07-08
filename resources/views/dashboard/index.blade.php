@@ -65,6 +65,32 @@
             </ul>
         </x-card>
     </div>
+    <div class="row mt-4">
+        
+    <div class="col-md-12">
+        <x-card>
+            <h5 class="mb-3">Recent Activity</h5>
+
+            @forelse($recentActivities as $activity)
+                <div class="d-flex justify-content-between border-bottom py-2">
+                    <div>
+                        <strong>{{ $activity->description }}</strong>
+                        <br>
+                        <small class="text-muted">
+                            {{ $activity->module }} · {{ ucfirst($activity->action) }}
+                        </small>
+                    </div>
+
+                    <small class="text-muted">
+                        {{ $activity->created_at->diffForHumans() }}
+                    </small>
+                </div>
+            @empty
+                <p class="text-muted mb-0">No recent activities found.</p>
+            @endforelse
+        </x-card>
+    </div>
+</div>
 </div>
 
 @endsection

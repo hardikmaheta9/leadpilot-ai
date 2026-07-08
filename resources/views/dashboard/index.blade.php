@@ -2,10 +2,7 @@
 
 @section('content')
 
-<x-layout.page-header
-    title="Dashboard"
-    subtitle="Your LeadPilot AI business development command center."
-/>
+<x-dashboard.welcome-banner />
 
 <div class="row">
     <x-dashboard.stat-card

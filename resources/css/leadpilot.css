@@ -215,3 +215,32 @@ body{
 
     font-weight:600;
 }
+/* ==========================================================
+   Command Center Welcome Banner
+   ========================================================== */
+
+.lp-welcome-banner {
+    background: linear-gradient(135deg, #2563EB, #1E40AF);
+    color: #FFFFFF;
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 20px 50px rgba(37, 99, 235, .25);
+}
+
+.lp-welcome-banner h1 {
+    font-size: 38px;
+    font-weight: 800;
+}
+
+.lp-welcome-banner .text-muted {
+    color: rgba(255, 255, 255, .75) !important;
+}
+
+.lp-welcome-actions .btn {
+    border-radius: 14px;
+    font-weight: 600;
+    padding: 12px 20px;
+}

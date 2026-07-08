@@ -2,17 +2,17 @@
 
 @section('content')
 
-<x-page-header
+<x-layout.page-header
     title="Edit Company"
     subtitle="Update company information."
 />
 
-<x-card>
+<x-cards.card>
     <form method="POST" action="{{ route('companies.update', $company->uuid) }}">
         @method('PUT')
 
         @include('companies.partials.form')
     </form>
-</x-card>
+</x-cards.card>
 
 @endsection

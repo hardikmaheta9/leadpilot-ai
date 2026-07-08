@@ -2,12 +2,12 @@
 
 @section('content')
 
-<x-page-header
+<x-layout.page-header
     :title="$company->company_name"
     subtitle="Company Details"
 />
 
-<x-card>
+<x-cards.card>
 
 <div class="row">
 
@@ -60,7 +60,7 @@
 
         <h6 class="text-muted">Status</h6>
 
-        <x-status-badge :status="$company->status"/>
+        <x-feedback.status-badge :status="$company->status"/>
 
     </div>
 
@@ -88,6 +88,6 @@
 
 </div>
 
-</x-card>
+</x-cards.card>
 
 @endsection

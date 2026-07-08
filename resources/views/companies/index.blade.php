@@ -1,7 +1,7 @@
 @extends('layouts.crm')
 
 @section('content')
-    <x-page-header
+    <x-layout.page-header
         title="Companies"
         subtitle="Manage prospect and customer companies."
         :action-url="route('companies.create')"
@@ -29,7 +29,7 @@
         @endif
     </div>
 </form>
-    <x-card>
+    <x-cards.card>
         <div class="table-responsive">
             <table class="table align-middle mb-0">
                 <thead>
@@ -67,7 +67,7 @@
                             <td>{{ $company->industry ?? '-' }}</td>
 
                             <td>
-                                <x-status-badge :status="$company->status" />
+                                <x-feedback.status-badge :status="$company->status" />
                             </td>
 
                             <td>
@@ -110,5 +110,5 @@
         <div class="mt-3">
             {{ $companies->links() }}
         </div>
-    </x-card>
+</x-cards.card>
 @endsection

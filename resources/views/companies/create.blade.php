@@ -2,12 +2,12 @@
 
 @section('content')
 
-<x-page-header
+<x-layout.page-header
     title="Create Company"
     subtitle="Add a new company to your CRM."
 />
 
-<x-card>
+<x-cards.card>
 
 <form method="POST" action="{{ route('companies.store') }}">
 
@@ -15,6 +15,6 @@
 
 </form>
 
-</x-card>
+</x-cards.card>
 
 @endsection

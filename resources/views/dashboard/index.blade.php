@@ -2,7 +2,7 @@
 
 @section('content')
 
-<x-page-header
+<x-layout.page-header
     title="Dashboard"
     subtitle="Your LeadPilot AI business development command center."
 />
@@ -35,7 +35,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        <x-card>
+        <x-cards.card>
             <h5 class="mb-3">Recent Companies</h5>
 
             @forelse($recentCompanies as $company)
@@ -46,16 +46,16 @@
                         <small class="text-muted">{{ $company->industry ?? '-' }}</small>
                     </div>
 
-                    <x-status-badge :status="$company->status" />
+                    <x-feedback.status-badge :status="$company->status" />
                 </div>
             @empty
                 <p class="text-muted mb-0">No companies found.</p>
             @endforelse
-        </x-card>
+</x-cards.card>
     </div>
 
     <div class="col-md-4">
-        <x-card>
+        <x-cards.card>
             <h5 class="mb-3">AI Suggestions</h5>
 
             <ul class="mb-0">
@@ -63,12 +63,12 @@
                 <li>Start by adding prospect companies.</li>
                 <li>Next: connect contacts with companies.</li>
             </ul>
-        </x-card>
+</x-cards.card>
     </div>
     <div class="row mt-4">
         
     <div class="col-md-12">
-        <x-card>
+        <x-cards.card>
             <h5 class="mb-3">Recent Activity</h5>
 
             @forelse($recentActivities as $activity)
@@ -88,7 +88,7 @@
             @empty
                 <p class="text-muted mb-0">No recent activities found.</p>
             @endforelse
-        </x-card>
+</x-cards.card>
     </div>
 </div>
 </div>

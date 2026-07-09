@@ -33,6 +33,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/companies/{companyUuid}/contacts/{contactUuid}', [CompanyContactController::class, 'destroy'])
         ->name('companies.contacts.destroy');
 
+    Route::patch('/companies/{companyUuid}/contacts/{contactUuid}/primary', [CompanyContactController::class, 'makePrimary'])
+    ->name('companies.contacts.primary');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

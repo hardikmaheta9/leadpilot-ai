@@ -72,4 +72,22 @@ class CompanyContactController extends Controller
             ->route('companies.show', [$company->uuid, 'tab' => 'contacts'])
             ->with('success', 'Contact deleted successfully.');
     }
+
+    public function makePrimary(string $companyUuid, string $contactUuid): RedirectResponse
+        {
+            $company = Company::where('uuid', $companyUuid)->firstOrFail();
+
+            $contact = Contact::where('uuid', $contactUuid)
+                ->where('company_uuid', $company->uuid)
+                ->firstOrFail();
+
+            Contact::where('company_uuid', $company->uuid)
+                ->update(['is_primary' => false]);
+
+            $contact->update(['is_primary' => true]);
+
+            return redirect()
+                ->route('companies.show', [$company->uuid, 'tab' => 'contacts'])
+                ->with('success', 'Primary contact updated successfully.');
+        }
 }

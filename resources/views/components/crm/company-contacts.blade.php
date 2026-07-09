@@ -64,7 +64,16 @@
                         </div>
 
                         <div class="flex-grow-1">
-                            <h6 class="mb-1">{{ $contact->full_name }}</h6>
+                            <h6 class="mb-1">
+                                {{ $contact->full_name }}
+
+                                @if($contact->is_primary)
+                                    <span class="badge bg-warning text-dark ms-2">
+                                        ⭐ Primary
+                                    </span>
+                                @endif
+
+                            </h6>
                             <small class="text-muted">{{ $contact->designation ?? 'Designation not set' }}</small>
 
                             <div class="mt-3">
@@ -92,6 +101,24 @@
                                     </a>
                                 @endif
 
+
+                                @if(!$contact->is_primary)
+
+                                <form action="{{ route('companies.contacts.primary', [$company->uuid, $contact->uuid]) }}"
+                                    method="POST">
+
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <button class="btn btn-sm btn-outline-warning">
+
+                                        ⭐ Primary
+
+                                    </button>
+
+                                </form>
+
+                                @endif
                                 <button class="btn btn-sm btn-outline-primary"
                                     type="button"
                                     data-bs-toggle="collapse"

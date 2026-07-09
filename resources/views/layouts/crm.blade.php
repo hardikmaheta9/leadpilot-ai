@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+
     <meta charset="UTF-8">
     <title>{{ $pageTitle ?? config('leadpilot.app_name') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,11 +84,15 @@
         .lp-badge-inactive { background:#F1F5F9; color:#475569; }
         .lp-badge-blacklisted { background:#FEE2E2; color:#B91C1C; }
     </style>
+
     @livewireStyles
+
 </head>
+
 <body>
 
 <aside class="lp-sidebar">
+
     <div class="brand">
         <h5 class="mb-0">LeadPilot AI</h5>
         <small class="text-secondary">v0.1 Alpha</small>
@@ -121,27 +125,47 @@
     <a href="#">
         <i class="fa-solid fa-gear me-2"></i> Settings
     </a>
+
 </aside>
 
 <div class="lp-main">
+
     <header class="lp-topbar d-flex align-items-center justify-content-between px-4">
-        <div class="text-muted">
-            {{ config('leadpilot.motto') }}
+
+        <div style="width:420px; position:relative;">
+
+            <input
+                id="globalSearch"
+                class="form-control"
+                placeholder="🔍 Search companies or contacts...">
+
+            <div
+                id="searchResults"
+                class="list-group position-absolute w-100 shadow"
+                style="display:none; z-index:9999; max-height:400px; overflow:auto;">
+            </div>
+
         </div>
 
         <div class="d-flex align-items-center gap-3">
+
             <span>{{ auth()->user()->name ?? 'User' }}</span>
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
+
                 <button class="btn btn-sm btn-outline-danger">
                     Logout
                 </button>
+
             </form>
+
         </div>
+
     </header>
 
     <main class="lp-content">
+
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -149,10 +173,16 @@
         @endif
 
         @yield('content')
+
     </main>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="{{ asset('js/search.js') }}"></script>
+
 @livewireScripts
+
 </body>
 </html>

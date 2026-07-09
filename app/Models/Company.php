@@ -3,10 +3,13 @@
 namespace App\Models;
 use App\Models\Task;
 use App\Models\Document;
+use App\Models\Meeting;
+use App\Models\CallLog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+
 
 class Company extends Model
 {
@@ -68,4 +71,21 @@ class Company extends Model
         return $this->hasMany(Document::class,'company_uuid','uuid')
             ->latest();
     }
+
+    public function meetings()
+    {
+        return $this->hasMany(
+            Meeting::class,
+            'company_uuid',
+            'uuid'
+        )->latest('meeting_date');
+    }
+
+
+    public function callLogs()
+    {
+        return $this->hasMany(CallLog::class, 'company_uuid', 'uuid')
+            ->latest('call_date');
+    }
+
 }

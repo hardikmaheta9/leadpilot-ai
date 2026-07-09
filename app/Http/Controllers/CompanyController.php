@@ -64,6 +64,10 @@ class CompanyController extends Controller
 
             $documents = $company->documents;
 
+            $meetings = $company->meetings;
+
+            $calls = $company->callLogs;
+
             return view('companies.show', compact(
                         'company',
                         'activities',
@@ -71,7 +75,9 @@ class CompanyController extends Controller
                         'contacts',
                         'tasks',
                         'documents',
-                        'activeTab'
+                        'meetings',
+                        'activeTab',
+                        'calls'
                     ));
     }
 

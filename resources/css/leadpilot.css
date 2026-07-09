@@ -715,3 +715,67 @@ body{
     box-shadow:0 12px 30px rgba(0,0,0,.08);
 
 }
+
+/*mettings cards*/
+
+.lp-meeting-card{
+
+    background:#fff;
+
+    border:1px solid var(--lp-border);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    margin-bottom:18px;
+
+    transition:.25s;
+
+}
+
+.lp-meeting-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}
+
+/*call logs*/
+
+.lp-call-card{
+    background:#fff;
+    border:1px solid var(--lp-border);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:18px;
+    transition:.25s;
+}
+
+.lp-call-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+
+/*time line*/
+
+.lp-timeline-item{
+    display:flex;
+    gap:16px;
+    padding:18px 0;
+    border-bottom:1px solid var(--lp-border);
+}
+
+.lp-timeline-dot{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:#EFF6FF;
+    color:var(--lp-primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}

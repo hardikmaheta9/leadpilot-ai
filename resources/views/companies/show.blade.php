@@ -9,24 +9,23 @@
     :active-tab="$activeTab"
 />
 
-{{-- ===========================
-    OVERVIEW
-============================ --}}
 @if($activeTab === 'overview')
     <x-crm.company-tabs.overview :company="$company" />
 @endif
 
-{{-- ===========================
-    ACTIVITIES
-============================ --}}
+@if($activeTab === 'timeline')
+    <x-crm.company-tabs.timeline
+        :notes="$notes"
+        :tasks="$tasks"
+        :meetings="$meetings"
+        :calls="$calls"
+        :documents="$documents"
+    />
+@endif
 
 @if($activeTab === 'activities')
     <x-crm.company-tabs.activities :activities="$activities" />
 @endif
-
-{{-- ===========================
-    NOTES
-============================ --}}
 
 @if($activeTab === 'notes')
     <x-crm.company-tabs.notes
@@ -35,21 +34,12 @@
     />
 @endif
 
-{{-- ===========================
-    Contact
-============================ --}}
-
 @if($activeTab === 'contacts')
     <x-crm.company-tabs.contacts
         :company="$company"
         :contacts="$contacts"
     />
 @endif
-
-
-{{-- ===========================
-    document
-============================ --}}
 
 @if($activeTab === 'documents')
     <x-crm.company-tabs.documents
@@ -58,10 +48,6 @@
     />
 @endif
 
-{{-- ===========================
-    Tasks
-============================ --}}
-
 @if($activeTab === 'tasks')
     <x-crm.company-tabs.tasks
         :company="$company"
@@ -69,24 +55,20 @@
     />
 @endif
 
-{{-- ===========================
-    AI Insight
-============================ --}}
+@if($activeTab === 'meetings')
+    <x-crm.company-tabs.meetings
+        :company="$company"
+        :meetings="$meetings"
+    />
+@endif
 
 @if($activeTab === 'ai')
-
-<x-cards.card>
-
-    <h4>AI Insights</h4>
-
-    <p class="text-muted">
-
-        AI Company Analysis coming soon.
-
-    </p>
-
-</x-cards.card>
-
+    <x-cards.card>
+        <h4>AI Insights</h4>
+        <p class="text-muted mb-0">
+            AI Company Analysis coming soon.
+        </p>
+    </x-cards.card>
 @endif
 
 @endsection

@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CompanyTaskController;
 use App\Http\Controllers\CompanyDocumentController;
+use App\Http\Controllers\CompanyMeetingController;
+use App\Http\Controllers\CompanyCallLogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -65,6 +67,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
    Route::delete('/companies/{companyUuid}/documents/{documentUuid}', [CompanyDocumentController::class, 'destroy'])
     ->name('companies.documents.destroy');
 
+
+   Route::post('/companies/{companyUuid}/meetings', [CompanyMeetingController::class, 'store'])
+    ->name('companies.meetings.store');
+
+  Route::put('/companies/{companyUuid}/meetings/{meetingUuid}', [CompanyMeetingController::class, 'update'])
+    ->name('companies.meetings.update');
+
+  Route::patch('/companies/{companyUuid}/meetings/{meetingUuid}/complete', [CompanyMeetingController::class, 'complete'])
+    ->name('companies.meetings.complete');
+
+  Route::delete('/companies/{companyUuid}/meetings/{meetingUuid}', [CompanyMeetingController::class, 'destroy'])
+    ->name('companies.meetings.destroy');
+
+  Route::post('/companies/{companyUuid}/calls', [CompanyCallLogController::class, 'store'])
+    ->name('companies.calls.store');
+
+  Route::put('/companies/{companyUuid}/calls/{callUuid}', [CompanyCallLogController::class, 'update'])
+    ->name('companies.calls.update');
+
+  Route::delete('/companies/{companyUuid}/calls/{callUuid}', [CompanyCallLogController::class, 'destroy'])
+    ->name('companies.calls.destroy');
+    
+   
 
 });
 

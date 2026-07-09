@@ -2,7 +2,7 @@
 
 namespace App\Models;
 use App\Models\Task;
-
+use App\Models\Document;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -60,6 +60,12 @@ class Company extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class, 'company_uuid', 'uuid')
+            ->latest();
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class,'company_uuid','uuid')
             ->latest();
     }
 }

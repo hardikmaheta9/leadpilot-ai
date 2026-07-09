@@ -691,3 +691,27 @@ body{
     transform:translateY(-3px);
     box-shadow:0 12px 30px rgba(0,0,0,.08);
 }
+
+/* company document card*/
+
+.lp-document-card{
+
+    background:#fff;
+
+    border:1px solid var(--lp-border);
+
+    border-radius:18px;
+
+    padding:22px;
+
+    transition:.25s;
+
+}
+
+.lp-document-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+}

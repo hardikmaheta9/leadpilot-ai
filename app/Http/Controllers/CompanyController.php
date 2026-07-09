@@ -62,7 +62,17 @@ class CompanyController extends Controller
 
             $tasks = $company->tasks;
 
-            return view('companies.show', compact('company', 'activities', 'notes', 'activeTab', 'contacts', 'tasks'));
+            $documents = $company->documents;
+
+            return view('companies.show', compact(
+                        'company',
+                        'activities',
+                        'notes',
+                        'contacts',
+                        'tasks',
+                        'documents',
+                        'activeTab'
+                    ));
     }
 
     public function edit(string $uuid): View

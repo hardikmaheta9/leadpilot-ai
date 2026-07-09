@@ -1,0 +1,1 @@
+<x-crm.activity-timeline :activities="$activities" />

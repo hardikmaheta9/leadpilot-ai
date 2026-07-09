@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CompanyTaskController;
+use App\Http\Controllers\CompanyDocumentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,12 +52,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
    
    Route::put('/companies/{companyUuid}/tasks/{taskUuid}', [CompanyTaskController::class, 'update'])
     ->name('companies.tasks.update');
-     
+
    Route::patch('/companies/{companyUuid}/tasks/{taskUuid}/complete', [CompanyTaskController::class, 'complete'])
     ->name('companies.tasks.complete');
 
    Route::delete('/companies/{companyUuid}/tasks/{taskUuid}', [CompanyTaskController::class, 'destroy'])
     ->name('companies.tasks.destroy');
+
+   Route::post('/companies/{companyUuid}/documents', [CompanyDocumentController::class, 'store'])
+    ->name('companies.documents.store');
+
+   Route::delete('/companies/{companyUuid}/documents/{documentUuid}', [CompanyDocumentController::class, 'destroy'])
+    ->name('companies.documents.destroy');
 
 
 });

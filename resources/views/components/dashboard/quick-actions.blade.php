@@ -1,16 +1,14 @@
-<div class="lp-quick-actions">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-            <h5 class="mb-1">Quick Actions</h5>
-            <small class="text-muted">Start common workflows instantly</small>
-        </div>
-    </div>
+<x-ui.section-card
+    title="Quick Actions"
+    icon="fa-solid fa-bolt">
 
     <div class="row g-3">
+
         <div class="col-md-6">
             <a href="{{ route('companies.create') }}" class="lp-action-card">
                 <i class="fa-solid fa-building"></i>
                 <span>Add Company</span>
+                <small>Create a new company profile</small>
             </a>
         </div>
 
@@ -18,6 +16,7 @@
             <a href="#" class="lp-action-card">
                 <i class="fa-solid fa-user-plus"></i>
                 <span>Add Contact</span>
+                <small>Create a company contact</small>
             </a>
         </div>
 
@@ -25,6 +24,7 @@
             <a href="#" class="lp-action-card">
                 <i class="fa-solid fa-bullseye"></i>
                 <span>Create Lead</span>
+                <small>Start a new opportunity</small>
             </a>
         </div>
 
@@ -32,7 +32,10 @@
             <a href="#" class="lp-action-card">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                 <span>AI Research</span>
+                <small>Analyze potential clients</small>
             </a>
         </div>
+
     </div>
-</div>
+
+</x-ui.section-card>

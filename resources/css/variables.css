@@ -1,0 +1,37 @@
+:root{
+    --lp-primary:#2563EB;
+    --lp-primary-dark:#1D4ED8;
+    --lp-primary-soft:#EFF6FF;
+
+    --lp-success:#10B981;
+    --lp-success-soft:#ECFDF5;
+
+    --lp-warning:#F59E0B;
+    --lp-warning-soft:#FFFBEB;
+
+    --lp-danger:#EF4444;
+    --lp-danger-soft:#FEF2F2;
+
+    --lp-purple:#7C3AED;
+    --lp-purple-soft:#F5F3FF;
+
+    --lp-bg:#F4F7FB;
+    --lp-sidebar:#06152E;
+    --lp-sidebar-light:#0B1F3F;
+    --lp-card:#FFFFFF;
+
+    --lp-text:#0F172A;
+    --lp-muted:#64748B;
+    --lp-border:#E5E7EB;
+
+    --lp-radius-sm:10px;
+    --lp-radius-md:16px;
+    --lp-radius-lg:22px;
+    --lp-radius-xl:28px;
+
+    --lp-shadow-sm:0 4px 12px rgba(15,23,42,.05);
+    --lp-shadow-md:0 10px 25px rgba(15,23,42,.08);
+    --lp-shadow-lg:0 18px 45px rgba(15,23,42,.12);
+
+    --lp-transition:.25s ease;
+}

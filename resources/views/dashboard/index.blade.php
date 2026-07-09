@@ -2,119 +2,188 @@
 
 @section('content')
 
-<x-dashboard.welcome-banner />
+<div class="lp-dashboard-hero">
+    <div>
+        <h1>Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 18 ? 'Afternoon' : 'Evening') }}, {{ explode(' ', auth()->user()->name)[0] }} 👋</h1>
+        <p>Your AI-powered CRM command center is ready.</p>
 
-<div class="row">
+        <div class="lp-hero-actions">
+            <a href="{{ route('companies.create') }}" class="lp-btn lp-btn-primary">
+                <i class="fa-solid fa-plus"></i> Add Company
+            </a>
 
-    <x-dashboard.stat-card
-        title="Companies"
-        :value="$totalCompanies"
-        icon="fa-solid fa-building"
-        growth="+2 This Week"
-        :route="route('companies.index')"
-    />
-
-    <x-dashboard.stat-card
-        title="Prospects"
-        :value="$prospectCompanies"
-        icon="fa-solid fa-bullseye"
-        growth="+0"
-    />
-
-    <x-dashboard.stat-card
-        title="Qualified"
-        :value="$qualifiedCompanies"
-        icon="fa-solid fa-circle-check"
-        growth="+0"
-    />
-
-    <x-dashboard.stat-card
-        title="Customers"
-        :value="$customerCompanies"
-        icon="fa-solid fa-handshake"
-        growth="+0"
-    />
-
-</div>
-
-<div class="row">
-    <div class="col-md-8">
-        <x-cards.card>
-            <h5 class="mb-3">Recent Companies</h5>
-
-            @forelse($recentCompanies as $company)
-                <div class="d-flex justify-content-between border-bottom py-2">
-                    <div>
-                        <strong>{{ $company->company_name }}</strong>
-                        <br>
-                        <small class="text-muted">{{ $company->industry ?? '-' }}</small>
-                    </div>
-
-                    <x-feedback.status-badge :status="$company->status" />
-                </div>
-            @empty
-                <p class="text-muted mb-0">No companies found.</p>
-            @endforelse
-        </x-cards.card>
-    </div>
-
-    <div class="col-md-4">
-        <x-dashboard.ai-assistant
-            :totalCompanies="$totalCompanies"
-            :prospectCompanies="$prospectCompanies"
-            :qualifiedCompanies="$qualifiedCompanies"
-        />
-    </div>
-
-    <div class="row mt-4">
-    <div class="col-md-12">
-        <x-dashboard.quick-actions />
-    </div>
-    </div>
-
-    <div class="row mt-4">
-        
-    <div class="col-md-12">
-        <x-cards.card>
-            <h5 class="mb-3">Recent Activity</h5>
-
-            @forelse($recentActivities as $activity)
-                <div class="d-flex justify-content-between border-bottom py-2">
-                    <div>
-                        <strong>{{ $activity->description }}</strong>
-                        <br>
-                        <small class="text-muted">
-                            {{ $activity->module }} · {{ ucfirst($activity->action) }}
-                        </small>
-                    </div>
-
-                    <small class="text-muted">
-                        {{ $activity->created_at->diffForHumans() }}
-                    </small>
-                </div>
-            @empty
-                <p class="text-muted mb-0">No recent activities found.</p>
-            @endforelse
-        </x-cards.card>
-    </div>
-
-    <div class="row mt-4">
-
-       <div class="col-lg-6">
-
-        <x-dashboard.business-health
-
-            :totalCompanies="$totalCompanies"
-
-            :companiesWithWebsite="$companiesWithWebsite"
-
-            :companiesWithEmail="$companiesWithEmail"
-
-        />
-
+            <a href="{{ route('calendar.index') }}" class="lp-btn lp-btn-light">
+                <i class="fa-solid fa-calendar-days"></i> Open Calendar
+            </a>
         </div>
     </div>
+
+    <div class="lp-hero-date">
+        <strong>{{ now()->format('d') }}</strong>
+        <span>{{ now()->format('F Y') }}</span>
+    </div>
 </div>
+
+<div class="row">
+    <x-ui.stat-card title="Companies" :value="$totalCompanies" icon="fa-solid fa-building" color="blue" />
+    <x-ui.stat-card title="Contacts" :value="$totalContacts" icon="fa-solid fa-address-book" color="purple" />
+    <x-ui.stat-card title="Open Tasks" :value="$openTasks" icon="fa-solid fa-list-check" color="orange" />
+    <x-ui.stat-card title="Meetings Today" :value="$todayMeetings" icon="fa-solid fa-calendar-days" color="green" />
 </div>
+
+<div class="row mt-4">
+    <div class="col-lg-8">
+        <x-ui.section-card title="Business Overview" icon="fa-solid fa-chart-line">
+            <canvas id="dashboardChart" height="115"></canvas>
+        </x-ui.section-card>
+    </div>
+
+    <div class="col-lg-4">
+        <x-ui.section-card title="AI Command Center" icon="fa-solid fa-robot">
+            <div class="lp-ai-command">
+                <div class="lp-ai-command-top">
+                    <div class="lp-ai-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div>
+                        <h5>Growth Engine Ready</h5>
+                        <p>AI discovery will start after CRM v1.0.</p>
+                    </div>
+                </div>
+
+                <div class="lp-ai-suggestion">
+                    <span>🔥</span>
+                    <div>
+                        <strong>{{ $openTasks }} follow-ups pending</strong>
+                        <small>Complete these before importing new leads.</small>
+                    </div>
+                </div>
+
+                <div class="lp-ai-suggestion">
+                    <span>📅</span>
+                    <div>
+                        <strong>{{ $todayMeetings }} meetings today</strong>
+                        <small>Review notes after each meeting.</small>
+                    </div>
+                </div>
+
+                <div class="lp-ai-suggestion">
+                    <span>🚀</span>
+                    <div>
+                        <strong>Lead Discovery next</strong>
+                        <small>Automatic lead engine will connect here.</small>
+                    </div>
+                </div>
+
+                <a href="#" class="lp-btn lp-btn-primary w-100 justify-content-center mt-3">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Prepare AI Engine
+                </a>
+            </div>
+        </x-ui.section-card>
+    </div>
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-lg-6">
+
+        <x-dashboard.quick-actions />
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <x-dashboard.recent-activity />
+
+    </div>
+
+</div>
+
+<div class="row mt-4">
+
+    <div class="col-lg-4">
+        <x-ui.section-card title="Upcoming Meetings" icon="fa-solid fa-calendar-days">
+            @forelse($upcomingMeetings as $meeting)
+                <div class="lp-dashboard-item">
+                    <div class="lp-dashboard-item-icon lp-blue">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+
+                    <div>
+                        <strong>{{ $meeting->title }}</strong>
+                        <small>
+                            {{ $meeting->meeting_date->format('d M Y') }}
+                            · {{ \Carbon\Carbon::parse($meeting->start_time)->format('h:i A') }}
+                        </small>
+                    </div>
+                </div>
+            @empty
+                <x-ui.empty-state
+                    icon="fa-solid fa-calendar-days"
+                    title="No Meetings"
+                    subtitle="You're free today."
+                />
+            @endforelse
+        </x-ui.section-card>
+    </div>
+
+    <div class="col-lg-4">
+        <x-ui.section-card title="Pending Tasks" icon="fa-solid fa-list-check">
+            @forelse($pendingTasks as $task)
+                <div class="lp-dashboard-item">
+                    <div class="lp-dashboard-item-icon {{ $task->due_date && $task->due_date->isPast() ? 'lp-red' : 'lp-orange' }}">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+
+                    <div>
+                        <strong>{{ $task->title }}</strong>
+                        <small class="{{ $task->due_date && $task->due_date->isPast() ? 'text-danger fw-bold' : '' }}">
+                            {{ $task->due_date ? $task->due_date->format('d M Y') : 'No due date' }}
+                        </small>
+                    </div>
+                </div>
+            @empty
+                <x-ui.empty-state
+                    icon="fa-solid fa-check"
+                    title="Nothing Pending"
+                    subtitle="Great job!"
+                />
+            @endforelse
+        </x-ui.section-card>
+    </div>
+
+    <div class="col-lg-4">
+        <x-ui.section-card title="Recent Calls" icon="fa-solid fa-phone">
+            @forelse($recentCalls as $call)
+                <div class="lp-dashboard-item">
+                    <div class="lp-dashboard-item-icon {{ $call->call_type === 'incoming' ? 'lp-green' : 'lp-purple' }}">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+
+                    <div>
+                        <strong>{{ $call->subject }}</strong>
+                        <small>
+                            {{ $call->call_date->format('d M Y') }}
+                            · {{ ucfirst($call->call_type) }}
+                        </small>
+                    </div>
+                </div>
+            @empty
+                <x-ui.empty-state
+                    icon="fa-solid fa-phone"
+                    title="No Calls"
+                    subtitle="Nothing recorded yet."
+                />
+            @endforelse
+        </x-ui.section-card>
+    </div>
+
+</div>
+
+<script>
+    window.dashboardStats = @json($chartData);
+</script>
 
 @endsection

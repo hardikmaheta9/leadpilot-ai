@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
+use App\Models\CallLog;
 use App\Models\Company;
+use App\Models\Contact;
+use App\Models\Meeting;
+use App\Models\Task;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -11,15 +14,33 @@ class DashboardController extends Controller
     public function index(): View
     {
         return view('dashboard.index', [
-            'pageTitle' => 'Dashboard',
             'totalCompanies' => Company::count(),
-            'prospectCompanies' => Company::where('status', 'prospect')->count(),
-            'qualifiedCompanies' => Company::where('status', 'qualified')->count(),
-            'customerCompanies' => Company::where('status', 'customer')->count(),
-            'recentCompanies' => Company::latest()->take(5)->get(),
-            'recentActivities' => Activity::latest()->take(8)->get(),
-            'companiesWithWebsite' => Company::whereNotNull('website')->where('website', '!=', '')->count(),
-            'companiesWithEmail' => Company::whereNotNull('email') ->where('email', '!=', '')->count(),
+            'totalContacts' => Contact::count(),
+            'openTasks' => Task::where('status', '!=', 'completed')->count(),
+            'todayMeetings' => Meeting::whereDate('meeting_date', today())->count(),
+
+            'upcomingMeetings' => Meeting::where('status', 'scheduled')
+                ->whereDate('meeting_date', '>=', today())
+                ->orderBy('meeting_date')
+                ->take(5)
+                ->get(),
+
+            'pendingTasks' => Task::where('status', '!=', 'completed')
+                ->orderBy('due_date')
+                ->take(5)
+                ->get(),
+
+            'recentCalls' => CallLog::latest()
+                ->take(5)
+                ->get(),
+
+            'chartData' => [
+                'companies' => Company::count(),
+                'contacts' => Contact::count(),
+                'tasks' => Task::count(),
+                'meetings' => Meeting::count(),
+                'calls' => CallLog::count(),
+            ],
         ]);
     }
 }

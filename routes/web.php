@@ -10,6 +10,7 @@ use App\Http\Controllers\CompanyTaskController;
 use App\Http\Controllers\CompanyDocumentController;
 use App\Http\Controllers\CompanyMeetingController;
 use App\Http\Controllers\CompanyCallLogController;
+use App\Http\Controllers\CalendarController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -89,7 +90,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::delete('/companies/{companyUuid}/calls/{callUuid}', [CompanyCallLogController::class, 'destroy'])
     ->name('companies.calls.destroy');
     
-   
+  Route::get('/calendar', [CalendarController::class, 'index'])
+    ->name('calendar.index');
+
+  Route::get('/calendar/events', [CalendarController::class, 'events'])
+    ->name('calendar.events');  
 
 });
 

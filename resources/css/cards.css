@@ -1,0 +1,115 @@
+.lp-section-card,
+.lp-stat-card{
+    background:var(--lp-card);
+    border:1px solid rgba(226,232,240,.85);
+    border-radius:var(--lp-radius-lg);
+    box-shadow:var(--lp-shadow-md);
+    transition:var(--lp-transition);
+}
+
+.lp-section-card:hover,
+.lp-stat-card:hover{
+    transform:translateY(-4px);
+    box-shadow:var(--lp-shadow-lg);
+}
+
+.lp-section-card{
+    padding:0;
+    overflow:hidden;
+    min-height:100%;
+}
+
+.lp-section-header{
+    padding:22px 24px;
+    border-bottom:1px solid var(--lp-border);
+    font-weight:900;
+    font-size:17px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.lp-section-body{
+    padding:24px;
+}
+
+.lp-stat-card{
+    padding:24px;
+    min-height:172px;
+    position:relative;
+    overflow:hidden;
+}
+
+.lp-stat-card::after{
+    content:"";
+    position:absolute;
+    width:130px;
+    height:130px;
+    right:-45px;
+    bottom:-55px;
+    border-radius:50%;
+    background:rgba(37,99,235,.08);
+}
+
+.lp-stat-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.lp-stat-icon{
+    width:58px;
+    height:58px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    color:#fff;
+}
+
+.lp-blue{background:linear-gradient(135deg,#2563EB,#1D4ED8);}
+.lp-green{background:linear-gradient(135deg,#10B981,#059669);}
+.lp-orange{background:linear-gradient(135deg,#F59E0B,#D97706);}
+.lp-purple{background:linear-gradient(135deg,#7C3AED,#6D28D9);}
+.lp-pink{background:linear-gradient(135deg,#EC4899,#DB2777);}
+
+.lp-stat-trend{
+    background:#ECFDF5;
+    color:#059669;
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:900;
+}
+
+.lp-stat-content h3{
+    margin:0;
+    font-size:38px;
+    font-weight:950;
+    color:var(--lp-text);
+    letter-spacing:-.04em;
+}
+
+.lp-stat-content p{
+    margin:4px 0 0;
+    color:var(--lp-muted);
+    font-weight:800;
+}
+
+.lp-stat-content small{
+    color:#94A3B8;
+    font-weight:700;
+}
+
+.lp-stat-sparkline{
+    position:absolute;
+    left:24px;
+    right:24px;
+    bottom:16px;
+    height:4px;
+    border-radius:999px;
+    background:linear-gradient(90deg,#2563EB,#7C3AED,#10B981);
+    opacity:.35;
+}

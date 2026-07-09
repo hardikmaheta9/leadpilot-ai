@@ -6,26 +6,26 @@
 
         <div class="lp-activity-item">
             <div class="lp-green-dot"></div>
-            Company created
-            <small>2 min ago</small>
+            Company module updated
+            <small>Today</small>
         </div>
 
         <div class="lp-activity-item">
             <div class="lp-blue-dot"></div>
-            Meeting scheduled
-            <small>18 min ago</small>
+            Meeting system ready
+            <small>Today</small>
         </div>
 
         <div class="lp-activity-item">
             <div class="lp-orange-dot"></div>
-            Task assigned
+            Tasks dashboard connected
             <small>Today</small>
         </div>
 
         <div class="lp-activity-item">
             <div class="lp-purple-dot"></div>
-            AI Workspace ready
-            <small>Today</small>
+            AI Growth Engine planned
+            <small>Next sprint</small>
         </div>
 
     </div>

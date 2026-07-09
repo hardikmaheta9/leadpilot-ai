@@ -63,4 +63,26 @@ class CompanyTaskController extends Controller
             ->route('companies.show', [$company->uuid, 'tab' => 'tasks'])
             ->with('success', 'Task deleted successfully.');
     }
+
+    public function update(Request $request, string $companyUuid, string $taskUuid): RedirectResponse
+    {
+        $company = Company::where('uuid', $companyUuid)->firstOrFail();
+
+        $task = Task::where('uuid', $taskUuid)
+            ->where('company_uuid', $company->uuid)
+            ->firstOrFail();
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'due_date' => ['nullable', 'date'],
+            'priority' => ['required', 'in:low,medium,high'],
+        ]);
+
+        $task->update($validated);
+
+        return redirect()
+            ->route('companies.show', [$company->uuid, 'tab' => 'tasks'])
+            ->with('success', 'Task updated successfully.');
+    }
 }

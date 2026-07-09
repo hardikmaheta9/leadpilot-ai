@@ -49,7 +49,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/companies/{companyUuid}/tasks', [CompanyTaskController::class, 'store'])
     ->name('companies.tasks.store');
     
+   Route::patch('/companies/{companyUuid}/tasks/{taskUuid}/complete', [CompanyTaskController::class, 'complete'])
+    ->name('companies.tasks.complete');
 
+   Route::delete('/companies/{companyUuid}/tasks/{taskUuid}', [CompanyTaskController::class, 'destroy'])
+    ->name('companies.tasks.destroy');
+
+    
 });
 
 require __DIR__.'/auth.php';

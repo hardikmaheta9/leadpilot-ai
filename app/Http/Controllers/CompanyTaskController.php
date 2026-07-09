@@ -30,4 +30,37 @@ class CompanyTaskController extends Controller
             ->route('companies.show', [$company->uuid, 'tab' => 'tasks'])
             ->with('success', 'Task created successfully.');
     }
+
+    public function complete(string $companyUuid, string $taskUuid): RedirectResponse
+    {
+        $company = Company::where('uuid', $companyUuid)->firstOrFail();
+
+        $task = Task::where('uuid', $taskUuid)
+            ->where('company_uuid', $company->uuid)
+            ->firstOrFail();
+
+        $task->update([
+            'status' => 'completed',
+            'completed_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('companies.show', [$company->uuid, 'tab' => 'tasks'])
+            ->with('success', 'Task completed successfully.');
+    }
+
+    public function destroy(string $companyUuid, string $taskUuid): RedirectResponse
+    {
+        $company = Company::where('uuid', $companyUuid)->firstOrFail();
+
+        $task = Task::where('uuid', $taskUuid)
+            ->where('company_uuid', $company->uuid)
+            ->firstOrFail();
+
+        $task->delete();
+
+        return redirect()
+            ->route('companies.show', [$company->uuid, 'tab' => 'tasks'])
+            ->with('success', 'Task deleted successfully.');
+    }
 }

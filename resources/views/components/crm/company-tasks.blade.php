@@ -43,25 +43,58 @@
     <hr>
 
     @forelse($tasks as $task)
-        <div class="lp-task-card">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h6 class="mb-1">{{ $task->title }}</h6>
-                    <small class="text-muted">
-                        Due: {{ $task->due_date ? $task->due_date->format('d M Y') : 'No due date' }}
-                    </small>
-                </div>
+    <div class="lp-task-card {{ $task->status === 'completed' ? 'opacity-75' : '' }}">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h6 class="mb-1 {{ $task->status === 'completed' ? 'text-decoration-line-through' : '' }}">
+                    {{ $task->title }}
+                </h6>
 
+                <small class="text-muted">
+                    Due: {{ $task->due_date ? $task->due_date->format('d M Y') : 'No due date' }}
+                </small>
+            </div>
+
+            <div class="d-flex gap-2">
                 <span class="badge bg-secondary">
                     {{ ucfirst($task->priority) }}
                 </span>
-            </div>
 
-            @if($task->description)
-                <p class="mt-3 mb-0">{{ $task->description }}</p>
-            @endif
+                <span class="badge {{ $task->status === 'completed' ? 'bg-success' : 'bg-warning text-dark' }}">
+                    {{ ucfirst($task->status) }}
+                </span>
+            </div>
         </div>
-    @empty
+
+        @if($task->description)
+            <p class="mt-3 mb-3">{{ $task->description }}</p>
+        @endif
+
+        <div class="d-flex gap-2 mt-3">
+            @if($task->status !== 'completed')
+                <form method="POST" action="{{ route('companies.tasks.complete', [$company->uuid, $task->uuid]) }}">
+                    @csrf
+                    @method('PATCH')
+
+                    <button class="btn btn-sm btn-outline-success">
+                        Complete
+                    </button>
+                </form>
+            @endif
+
+            <form method="POST"
+                  action="{{ route('companies.tasks.destroy', [$company->uuid, $task->uuid]) }}"
+                  onsubmit="return confirm('Delete this task?')">
+                @csrf
+                @method('DELETE')
+
+                <button class="btn btn-sm btn-outline-danger">
+                    Delete
+                </button>
+            </form>
+        </div>
+      </div>
+      @empty
         <div class="text-center py-5">
             <i class="fa-solid fa-list-check fa-3x text-muted mb-3"></i>
             <h6>No Tasks Yet</h6>

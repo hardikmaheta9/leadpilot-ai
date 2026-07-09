@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Task;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +55,11 @@ class Company extends Model
                 $company->updated_by = auth()->id();
             }
         });
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'company_uuid', 'uuid')
+            ->latest();
     }
 }

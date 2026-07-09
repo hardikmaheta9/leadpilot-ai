@@ -5,8 +5,9 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyNoteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CompanyTaskController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,7 +46,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/search', [SearchController::class, 'index'])
     ->name('search');
 
-
+    Route::post('/companies/{companyUuid}/tasks', [CompanyTaskController::class, 'store'])
+    ->name('companies.tasks.store');
     
 
 });

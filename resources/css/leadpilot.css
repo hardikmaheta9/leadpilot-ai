@@ -632,3 +632,62 @@ body{
     font-weight:800;
     font-size:22px;
 }
+
+/* ==========================================================
+   LeadPilot Search Selection
+   ========================================================== */
+
+/* ==========================================================
+   LeadPilot Global Search
+   ========================================================== */
+
+#searchResults{
+    border:1px solid #E2E8F0;
+    border-radius:16px;
+    overflow:hidden;
+    background:#FFFFFF;
+    box-shadow:0 18px 45px rgba(15,23,42,.10);
+}
+
+#searchResults .list-group-item{
+    border:0;
+    padding:14px 18px;
+    transition:all .18s ease;
+    cursor:pointer;
+}
+
+#searchResults .list-group-item:hover{
+    background:#F8FAFC;
+}
+
+.lp-search-selected{
+    background:linear-gradient(135deg,#2563EB,#1D4ED8) !important;
+    color:#FFFFFF !important;
+    border-left:5px solid #FBBF24;
+    transform:translateX(4px);
+}
+
+.lp-search-selected .fw-bold{
+    color:#FFFFFF !important;
+}
+
+.lp-search-selected small{
+    color:#DBEAFE !important;
+}
+
+/*company task tabs cards*/
+
+.lp-task-card{
+    background:#F8FAFC;
+    border:1px solid var(--lp-border);
+    border-radius:18px;
+    padding:20px;
+    margin-bottom:16px;
+    transition:.25s;
+}
+
+.lp-task-card:hover{
+    background:#FFFFFF;
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}

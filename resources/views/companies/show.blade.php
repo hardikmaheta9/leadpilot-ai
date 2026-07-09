@@ -143,19 +143,10 @@
 @endif
 
 @if($activeTab === 'tasks')
-
-<x-cards.card>
-
-    <h4>Tasks</h4>
-
-    <p class="text-muted">
-
-        Tasks module coming in Sprint 6.
-
-    </p>
-
-</x-cards.card>
-
+    <x-crm.company-tasks
+        :company="$company"
+        :tasks="$tasks"
+    />
 @endif
 
 @if($activeTab === 'ai')

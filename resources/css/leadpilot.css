@@ -596,3 +596,39 @@ body{
 
     background:#EFF6FF;
 }
+
+.lp-contacts-card{
+    background:#FFFFFF;
+    border:1px solid var(--lp-border);
+    border-radius:20px;
+    padding:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.lp-contact-card{
+    background:#F8FAFC;
+    border:1px solid var(--lp-border);
+    border-radius:18px;
+    padding:20px;
+    transition:.25s;
+    height:100%;
+}
+
+.lp-contact-card:hover{
+    background:#FFFFFF;
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+.lp-contact-avatar{
+    width:54px;
+    height:54px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#2563EB,#1D4ED8);
+    color:#FFFFFF;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:22px;
+}

@@ -1,17 +1,15 @@
 <?php
 
+use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyNoteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CompanyNoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::post('/companies/{companyUuid}/notes', [CompanyNoteController::class, 'store'])
-    ->name('companies.notes.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -22,6 +20,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->parameters([
             'companies' => 'uuid',
         ]);
+
+    Route::post('/companies/{companyUuid}/notes', [CompanyNoteController::class, 'store'])
+        ->name('companies.notes.store');
+
+    Route::post('/companies/{companyUuid}/contacts', [CompanyContactController::class, 'store'])
+        ->name('companies.contacts.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

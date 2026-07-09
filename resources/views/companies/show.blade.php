@@ -122,19 +122,8 @@
 ============================ --}}
 
 @if($activeTab === 'contacts')
-
-<x-cards.card>
-
-    <h4>Contacts</h4>
-
-    <p class="text-muted">
-
-        Contacts module coming in Sprint 4.
-
-    </p>
-
-</x-cards.card>
-
+    <x-crm.company-contacts :company="$company" :contacts="$contacts"
+/>
 @endif
 
 @if($activeTab === 'documents')

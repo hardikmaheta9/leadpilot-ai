@@ -56,9 +56,11 @@ class CompanyController extends Controller
                 ->latest()
                 ->get();
 
+            $contacts = \App\Models\Contact::where('company_uuid', $company->uuid)->latest()->get();
+
             $activeTab = $request->get('tab', 'overview');
 
-            return view('companies.show', compact('company', 'activities', 'notes', 'activeTab'));
+            return view('companies.show', compact('company', 'activities', 'notes', 'activeTab', 'contacts'));
     }
 
     public function edit(string $uuid): View

@@ -1,0 +1,129 @@
+.lp-search-wrap{
+    position:relative;
+}
+
+#searchResults{
+    top:calc(100% + 10px);
+    overflow:hidden !important;
+    border:1px solid var(--lp-border);
+    border-radius:20px;
+    background:#fff;
+    box-shadow:0 25px 70px rgba(15,23,42,.16);
+}
+
+.lp-search-result{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 14px;
+    border-bottom:1px solid var(--lp-border);
+    color:var(--lp-text);
+    text-decoration:none;
+    transition:var(--lp-transition);
+}
+
+.lp-search-result:last-child{
+    border-bottom:0;
+}
+
+.lp-search-result:hover,
+.lp-search-result.active{
+    color:var(--lp-primary);
+    background:#F8FAFC;
+}
+
+.lp-search-result-icon{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    color:#2563EB;
+    background:#DBEAFE;
+}
+
+.lp-search-result-contact{
+    color:#7C3AED;
+    background:#EDE9FE;
+}
+
+.lp-search-result-task{
+    color:#D97706;
+    background:#FEF3C7;
+}
+
+.lp-search-result-meeting{
+    color:#059669;
+    background:#D1FAE5;
+}
+
+.lp-search-result-call{
+    color:#DC2626;
+    background:#FEE2E2;
+}
+
+.lp-search-result-note{
+    color:#92400E;
+    background:#FEF3C7;
+}
+
+.lp-search-result-document{
+    color:#475569;
+    background:#E2E8F0;
+}
+
+.lp-search-result-content{
+    min-width:0;
+    flex:1;
+}
+
+.lp-search-result-content strong,
+.lp-search-result-content small{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.lp-search-result-content strong{
+    font-size:13px;
+    font-weight:900;
+}
+
+.lp-search-result-content small{
+    margin-top:2px;
+    color:var(--lp-muted);
+    font-size:11px;
+}
+
+.lp-search-result-type{
+    color:var(--lp-muted);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+}
+
+.lp-search-result mark{
+    padding:0;
+    color:inherit;
+    background:#FEF3C7;
+}
+
+.lp-search-state{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-height:90px;
+    padding:20px;
+    color:var(--lp-muted);
+    font-size:13px;
+    font-weight:750;
+}
+
+.lp-search-state-error{
+    color:#B91C1C;
+}

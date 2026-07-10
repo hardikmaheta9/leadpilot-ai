@@ -1,0 +1,579 @@
+/* ==================================================
+   Premium Modal
+================================================== */
+
+.lp-modal{
+
+    border:0;
+
+    border-radius:26px;
+
+    overflow:hidden;
+
+    box-shadow:0 35px 90px rgba(15,23,42,.20);
+
+}
+
+.lp-modal-header{
+
+    padding:22px 28px;
+
+    border-bottom:1px solid var(--lp-border);
+
+    background:
+        radial-gradient(circle at right top,
+        rgba(37,99,235,.08),
+        transparent 40%),
+        #fff;
+
+}
+
+.lp-modal-header .modal-title{
+
+    font-size:22px;
+
+    font-weight:900;
+
+    letter-spacing:-.03em;
+
+}
+
+/*==================================================
+    Action Menu
+==================================================*/
+
+.lp-action-menu-btn{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#F8FAFC;
+
+    color:#475569;
+
+    transition:var(--lp-transition);
+
+}
+
+.lp-action-menu-btn:hover{
+
+    background:#EFF6FF;
+
+    color:var(--lp-primary);
+
+}
+
+.lp-action-dropdown{
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:10px;
+
+    min-width:220px;
+
+    box-shadow:0 25px 60px rgba(15,23,42,.15);
+
+}
+
+.lp-action-dropdown a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 14px;
+
+    border-radius:12px;
+
+    color:var(--lp-text);
+
+    font-weight:700;
+
+    text-decoration:none;
+
+}
+
+.lp-action-dropdown a:hover{
+
+    background:#F8FAFC;
+
+    color:var(--lp-primary);
+
+}
+
+.lp-action-dropdown form{
+
+    margin:0;
+
+}
+
+.lp-action-dropdown button{
+
+    width:100%;
+
+    border:none;
+
+    background:none;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 14px;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    text-align:left;
+
+}
+
+.lp-action-dropdown button:hover{
+
+    background:#FEF2F2;
+
+    color:#DC2626;
+
+}
+
+/*==================================================
+    Empty State
+==================================================*/
+
+.lp-empty-state{
+
+    padding:70px 30px;
+
+    text-align:center;
+
+}
+
+.lp-empty-icon{
+
+    width:82px;
+
+    height:82px;
+
+    margin:auto;
+
+    border-radius:24px;
+
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:34px;
+
+    margin-bottom:20px;
+
+}
+
+.lp-empty-state h5{
+
+    font-weight:900;
+
+}
+
+.lp-empty-state p{
+
+    color:var(--lp-muted);
+
+}
+
+/*==================================================
+    Skeleton
+==================================================*/
+
+.lp-skeleton{
+
+    height:18px;
+
+    border-radius:8px;
+
+    background:linear-gradient(
+        90deg,
+        #E2E8F0 25%,
+        #F8FAFC 50%,
+        #E2E8F0 75%
+    );
+
+    background-size:400%;
+
+    animation:lpLoading 1.4s infinite;
+
+}
+
+@keyframes lpLoading{
+
+    0%{
+        background-position:100%;
+    }
+
+    100%{
+        background-position:-100%;
+    }
+
+}
+
+/* ==========================================
+   Action Menu Dropdown Fix
+========================================== */
+
+.lp-action-menu{
+    position:relative;
+}
+
+.lp-action-dropdown{
+    z-index:2050;
+    min-width:230px;
+    max-height:380px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.lp-action-dropdown .dropdown-divider{
+    margin:7px 4px;
+    border-color:var(--lp-border);
+}
+
+/* ==========================================
+   Premium Toast Notifications
+========================================== */
+
+.lp-toast-container{
+    position:fixed;
+    top:92px;
+    right:28px;
+    z-index:3000;
+    width:min(390px, calc(100vw - 32px));
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    pointer-events:none;
+}
+
+.lp-toast{
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap:13px;
+    padding:16px 48px 16px 16px;
+    border:1px solid var(--lp-border);
+    border-radius:18px;
+    background:#fff;
+    box-shadow:0 24px 60px rgba(15,23,42,.16);
+    opacity:0;
+    transform:translateX(35px);
+    animation:lpToastIn .35s ease forwards;
+    pointer-events:auto;
+}
+
+.lp-toast.is-hiding{
+    animation:lpToastOut .28s ease forwards;
+}
+
+.lp-toast-icon{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    font-size:18px;
+}
+
+.lp-toast-content{
+    min-width:0;
+    flex:1;
+}
+
+.lp-toast-content strong{
+    display:block;
+    margin-bottom:3px;
+    color:var(--lp-text);
+    font-size:14px;
+    font-weight:950;
+}
+
+.lp-toast-content p{
+    margin:0;
+    color:var(--lp-muted);
+    font-size:12px;
+    line-height:1.55;
+    overflow-wrap:anywhere;
+}
+
+.lp-toast-close{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:30px;
+    height:30px;
+    border:0;
+    border-radius:10px;
+    background:transparent;
+    color:#94A3B8;
+}
+
+.lp-toast-close:hover{
+    background:#F1F5F9;
+    color:var(--lp-text);
+}
+
+.lp-toast-success{
+    border-left:4px solid #10B981;
+}
+
+.lp-toast-success .lp-toast-icon{
+    color:#047857;
+    background:#D1FAE5;
+}
+
+.lp-toast-error{
+    border-left:4px solid #EF4444;
+}
+
+.lp-toast-error .lp-toast-icon{
+    color:#B91C1C;
+    background:#FEE2E2;
+}
+
+.lp-toast-warning{
+    border-left:4px solid #F59E0B;
+}
+
+.lp-toast-warning .lp-toast-icon{
+    color:#92400E;
+    background:#FEF3C7;
+}
+
+.lp-toast-info{
+    border-left:4px solid #2563EB;
+}
+
+.lp-toast-info .lp-toast-icon{
+    color:#1D4ED8;
+    background:#DBEAFE;
+}
+
+@keyframes lpToastIn{
+    from{
+        opacity:0;
+        transform:translateX(35px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+@keyframes lpToastOut{
+    from{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+    to{
+        opacity:0;
+        transform:translateX(35px);
+    }
+}
+
+@media (max-width: 575.98px){
+    .lp-toast-container{
+        top:78px;
+        right:16px;
+        left:16px;
+        width:auto;
+    }
+}
+
+/* ==========================================
+   Loading Buttons
+========================================== */
+
+button:disabled{
+
+    opacity:.85;
+
+    cursor:not-allowed;
+
+}
+
+.spinner-border-sm{
+
+    width:15px;
+
+    height:15px;
+
+}
+
+/*==========================================
+    Skeleton Loading
+==========================================*/
+
+.lp-skeleton-card{
+
+    display:flex;
+
+    gap:16px;
+
+    padding:22px;
+
+    border-radius:22px;
+
+    background:#fff;
+
+    border:1px solid var(--lp-border);
+
+    box-shadow:var(--lp-shadow-sm);
+
+}
+
+.lp-skeleton{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#E5E7EB;
+
+    border-radius:10px;
+
+}
+
+.lp-skeleton::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    transform:translateX(-100%);
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
+
+    animation:lpSkeleton 1.3s infinite;
+
+}
+
+.lp-skeleton-icon{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:18px;
+
+    flex-shrink:0;
+
+}
+
+.lp-skeleton-content{
+
+    flex:1;
+
+}
+
+.lp-skeleton-title{
+
+    height:18px;
+
+    width:45%;
+
+    margin-bottom:14px;
+
+}
+
+.lp-skeleton-text{
+
+    height:12px;
+
+    width:100%;
+
+    margin-bottom:10px;
+
+}
+
+.lp-skeleton-text.short{
+
+    width:70%;
+
+}
+
+@keyframes lpSkeleton{
+
+    100%{
+
+        transform:translateX(100%);
+
+    }
+
+}
+
+/* ==========================================
+   Delete Confirmation Modal
+========================================== */
+
+.lp-confirm-modal{
+    max-width:460px;
+    margin:auto;
+}
+
+.lp-confirm-icon{
+    width:76px;
+    height:76px;
+    margin:0 auto 20px;
+    border-radius:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#DC2626;
+    background:#FEE2E2;
+    font-size:30px;
+}
+
+.lp-confirm-modal h4{
+    margin:0;
+    color:var(--lp-text);
+    font-size:22px;
+    font-weight:950;
+}
+
+.lp-confirm-modal p{
+    margin:10px 0 0;
+    color:var(--lp-muted);
+    font-size:13px;
+}
+
+.lp-confirm-delete-btn{
+    color:#fff;
+    background:linear-gradient(135deg,#EF4444,#DC2626);
+    box-shadow:0 12px 26px rgba(220,38,38,.24);
+}

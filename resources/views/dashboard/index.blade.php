@@ -34,7 +34,9 @@
 <div class="row mt-4">
     <div class="col-lg-8">
         <x-ui.section-card title="Business Overview" icon="fa-solid fa-chart-line">
-            <canvas id="dashboardChart" height="115"></canvas>
+            <div class="lp-business-chart-wrap">
+               <canvas id="dashboardChart"></canvas>
+           </div>
         </x-ui.section-card>
     </div>
 

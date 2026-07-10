@@ -1,77 +1,152 @@
-<div class="lp-contacts-card">
-    <div class="mb-4">
-        <h5 class="mb-1">Company Timeline</h5>
-        <small class="text-muted">Complete history of company interactions.</small>
+@php
+    $items = collect();
+
+    foreach ($notes as $note) {
+        $items->push([
+            'date' => $note->created_at,
+            'type' => 'note',
+            'icon' => 'fa-solid fa-note-sticky',
+            'title' => 'Note Added',
+            'text' => trim($note->note),
+            'meta' => 'Knowledge update',
+        ]);
+    }
+
+    foreach ($tasks as $task) {
+        $items->push([
+            'date' => $task->created_at,
+            'type' => 'task',
+            'icon' => 'fa-solid fa-list-check',
+            'title' => 'Task: ' . $task->title,
+            'text' => ucfirst(str_replace('_', ' ', $task->status))
+                . ' · ' . ucfirst($task->priority) . ' priority',
+            'meta' => $task->due_date
+                ? 'Due ' . $task->due_date->format('d M Y')
+                : 'No due date',
+        ]);
+    }
+
+    foreach ($meetings as $meeting) {
+        $items->push([
+            'date' => $meeting->created_at,
+            'type' => 'meeting',
+            'icon' => 'fa-solid fa-calendar-days',
+            'title' => 'Meeting: ' . $meeting->title,
+            'text' => $meeting->meeting_date->format('d M Y')
+                . ' · '
+                . \Carbon\Carbon::parse($meeting->start_time)->format('h:i A'),
+            'meta' => ucwords(str_replace('_', ' ', $meeting->meeting_type)),
+        ]);
+    }
+
+    foreach ($calls as $call) {
+        $items->push([
+            'date' => $call->created_at,
+            'type' => 'call',
+            'icon' => 'fa-solid fa-phone',
+            'title' => 'Call: ' . $call->subject,
+            'text' => ucfirst($call->call_type)
+                . ' · '
+                . ($call->duration ?? 0)
+                . ' min',
+            'meta' => ucfirst($call->status ?? 'logged'),
+        ]);
+    }
+
+    foreach ($documents as $document) {
+        $items->push([
+            'date' => $document->created_at,
+            'type' => 'document',
+            'icon' => 'fa-solid fa-file-lines',
+            'title' => 'Document Uploaded: ' . $document->title,
+            'text' => $document->original_filename,
+            'meta' => $document->category ?: 'General',
+        ]);
+    }
+
+    $items = $items->sortByDesc('date')->values();
+@endphp
+
+<div class="lp-module-card">
+
+    <div class="lp-module-header">
+        <div>
+            <span class="lp-module-eyebrow">History</span>
+            <h4>Company Timeline</h4>
+            <p>Complete chronological history of company interactions.</p>
+        </div>
+
+        <div class="lp-timeline-count">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            {{ $items->count() }} Activities
+        </div>
     </div>
 
-    @php
-        $items = collect();
+    <div class="lp-module-body">
 
-        foreach($notes as $note){
-            $items->push([
-                'date' => $note->created_at,
-                'icon' => 'fa-note-sticky',
-                'title' => 'Note Added',
-                'text' => $note->note,
-            ]);
-        }
+        @forelse($items as $item)
 
-        foreach($tasks as $task){
-            $items->push([
-                'date' => $task->created_at,
-                'icon' => 'fa-list-check',
-                'title' => 'Task: '.$task->title,
-                'text' => $task->status.' | Priority: '.$task->priority,
-            ]);
-        }
+            <div class="lp-premium-timeline-item">
 
-        foreach($meetings as $meeting){
-            $items->push([
-                'date' => $meeting->created_at,
-                'icon' => 'fa-calendar-days',
-                'title' => 'Meeting: '.$meeting->title,
-                'text' => $meeting->meeting_date->format('d M Y').' '.$meeting->start_time,
-            ]);
-        }
+                <div class="lp-timeline-marker">
 
-        foreach($calls as $call){
-            $items->push([
-                'date' => $call->created_at,
-                'icon' => 'fa-phone',
-                'title' => 'Call: '.$call->subject,
-                'text' => ucfirst($call->call_type).' | '.$call->duration.' min',
-            ]);
-        }
+                    <div class="lp-timeline-icon lp-timeline-{{ $item['type'] }}">
+                        <i class="{{ $item['icon'] }}"></i>
+                    </div>
 
-        foreach($documents as $document){
-            $items->push([
-                'date' => $document->created_at,
-                'icon' => 'fa-file',
-                'title' => 'Document Uploaded: '.$document->title,
-                'text' => $document->category,
-            ]);
-        }
+                    <div class="lp-timeline-line"></div>
 
-        $items = $items->sortByDesc('date');
-    @endphp
+                </div>
 
-    @forelse($items as $item)
-        <div class="lp-timeline-item">
-            <div class="lp-timeline-dot">
-                <i class="fa-solid {{ $item['icon'] }}"></i>
+                <div class="lp-timeline-content">
+
+                    <div class="lp-timeline-content-top">
+
+                        <div>
+                            <span class="lp-timeline-type">
+                                {{ ucfirst($item['type']) }}
+                            </span>
+
+                            <h5>{{ $item['title'] }}</h5>
+                        </div>
+
+                        <div class="lp-timeline-time">
+                            <strong>{{ $item['date']->format('d M Y') }}</strong>
+                            <small>{{ $item['date']->format('h:i A') }}</small>
+                        </div>
+
+                    </div>
+
+                    <p>{{ $item['text'] }}</p>
+
+                    <div class="lp-timeline-footer">
+
+                        <span>
+                            <i class="fa-solid fa-circle-info"></i>
+                            {{ $item['meta'] }}
+                        </span>
+
+                        <span>
+                            <i class="fa-regular fa-clock"></i>
+                            {{ $item['date']->diffForHumans() }}
+                        </span>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div>
-                <strong>{{ $item['title'] }}</strong>
-                <p class="mb-1 text-muted">{{ $item['text'] }}</p>
-                <small class="text-muted">{{ $item['date']->diffForHumans() }}</small>
-            </div>
-        </div>
-    @empty
-        <div class="text-center py-5">
-            <i class="fa-solid fa-clock-rotate-left fa-3x text-muted mb-3"></i>
-            <h5>No Timeline Yet</h5>
-            <p class="text-muted">Company activities will appear here.</p>
-        </div>
-    @endforelse
+        @empty
+
+            <x-ui.empty-state
+                icon="fa-solid fa-clock-rotate-left"
+                title="No Timeline Yet"
+                subtitle="Company activities will appear here automatically."
+            />
+
+        @endforelse
+
+    </div>
+
 </div>

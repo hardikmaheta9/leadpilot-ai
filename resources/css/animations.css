@@ -1,5 +1,191 @@
-@tailwind base;
+/*@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @import './leadpilot.css';
+*/
+/* ==========================================
+   LeadPilot UI Animations
+========================================== */
+
+@keyframes lpFadeUp{
+    from{
+        opacity:0;
+        transform:translateY(14px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@keyframes lpFadeIn{
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes lpScaleIn{
+    from{
+        opacity:0;
+        transform:scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes lpPulseSoft{
+    0%,
+    100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.04);
+    }
+}
+
+.lp-content{
+    animation:lpFadeIn .28s ease;
+}
+
+.lp-module-card,
+.lp-overview-card,
+.lp-company-hero,
+.lp-dashboard-hero{
+    animation:lpFadeUp .38s ease both;
+}
+
+.lp-premium-contact-card,
+.lp-premium-task-card,
+.lp-premium-meeting-card,
+.lp-premium-call-card,
+.lp-premium-note-card,
+.lp-premium-document-card,
+.lp-timeline-content,
+.lp-ai-score-card,
+.lp-ai-metric-card,
+.lp-ai-insight-panel{
+    animation:lpFadeUp .42s ease both;
+}
+
+.lp-premium-contact-card:nth-child(2),
+.lp-premium-task-card:nth-child(2),
+.lp-premium-meeting-card:nth-child(2),
+.lp-premium-call-card:nth-child(2),
+.lp-premium-note-card:nth-child(2),
+.lp-premium-document-card:nth-child(2){
+    animation-delay:.04s;
+}
+
+.lp-btn,
+.lp-icon-btn,
+.lp-action-menu-btn,
+.lp-contact-quick-btn,
+.lp-task-action-btn,
+.lp-meeting-action-btn,
+.lp-call-action-btn,
+.lp-document-action-btn{
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background-color .2s ease,
+        border-color .2s ease,
+        color .2s ease;
+}
+
+.lp-btn:active,
+.lp-icon-btn:active,
+.lp-action-menu-btn:active,
+.lp-contact-quick-btn:active,
+.lp-task-action-btn:active,
+.lp-meeting-action-btn:active,
+.lp-call-action-btn:active,
+.lp-document-action-btn:active{
+    transform:scale(.97);
+}
+
+.lp-company-avatar,
+.lp-contact-avatar,
+.lp-task-icon,
+.lp-meeting-icon,
+.lp-call-icon,
+.lp-document-icon,
+.lp-note-icon{
+    transition:
+        transform .22s ease,
+        box-shadow .22s ease;
+}
+
+.lp-premium-contact-card:hover .lp-contact-avatar,
+.lp-premium-task-card:hover .lp-task-icon,
+.lp-premium-meeting-card:hover .lp-meeting-icon,
+.lp-premium-call-card:hover .lp-call-icon,
+.lp-premium-document-card:hover .lp-document-icon,
+.lp-premium-note-card:hover .lp-note-icon{
+    transform:translateY(-2px) scale(1.04);
+}
+
+.lp-primary-contact-badge,
+.lp-task-priority,
+.lp-task-status,
+.lp-meeting-type-badge,
+.lp-meeting-status,
+.lp-call-type-badge,
+.lp-call-status,
+.lp-document-category,
+.lp-document-extension,
+.lp-ai-engine-badge{
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.lp-primary-contact-badge:hover,
+.lp-task-priority:hover,
+.lp-task-status:hover,
+.lp-meeting-type-badge:hover,
+.lp-meeting-status:hover,
+.lp-call-type-badge:hover,
+.lp-call-status:hover,
+.lp-document-category:hover,
+.lp-document-extension:hover,
+.lp-ai-engine-badge:hover{
+    transform:translateY(-1px);
+}
+
+.lp-search-result{
+    animation:lpFadeUp .22s ease both;
+}
+
+.modal.show .lp-modal{
+    animation:lpScaleIn .22s ease;
+}
+
+.dropdown-menu.show{
+    animation:lpScaleIn .16s ease;
+    transform-origin:top right;
+}
+
+.lp-toast{
+    backdrop-filter:blur(10px);
+}
+
+@media (prefers-reduced-motion: reduce){
+    *,
+    *::before,
+    *::after{
+        scroll-behavior:auto !important;
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+    }
+}

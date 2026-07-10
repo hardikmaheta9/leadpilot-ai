@@ -96,6 +96,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
   Route::get('/calendar/events', [CalendarController::class, 'events'])
     ->name('calendar.events');  
 
+  Route::post('/companies/{companyUuid}/notes', [CompanyNoteController::class, 'store'])
+    ->name('companies.notes.store');
+
+  Route::put('/companies/{companyUuid}/notes/{noteUuid}', [CompanyNoteController::class, 'update'])
+    ->name('companies.notes.update');
+
+  Route::delete('/companies/{companyUuid}/notes/{noteUuid}', [CompanyNoteController::class, 'destroy'])
+    ->name('companies.notes.destroy');   
+
 });
 
 require __DIR__.'/auth.php';

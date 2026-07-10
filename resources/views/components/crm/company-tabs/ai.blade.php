@@ -1,0 +1,9 @@
+<x-crm.company-ai-insights
+    :company="$company"
+    :contacts="$contacts"
+    :tasks="$tasks"
+    :meetings="$meetings"
+    :calls="$calls"
+    :notes="$notes"
+    :documents="$documents"
+/>

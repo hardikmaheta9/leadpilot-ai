@@ -13,33 +13,48 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
+        $totalCompanies = Company::count();
+        $totalContacts = Contact::count();
+        $totalTasks = Task::count();
+        $totalMeetings = Meeting::count();
+        $totalCalls = CallLog::count();
+
+        $openTasks = Task::where('status', '!=', 'completed')->count();
+        $todayMeetings = Meeting::whereDate('meeting_date', today())->count();
+
         return view('dashboard.index', [
-            'totalCompanies' => Company::count(),
-            'totalContacts' => Contact::count(),
-            'openTasks' => Task::where('status', '!=', 'completed')->count(),
-            'todayMeetings' => Meeting::whereDate('meeting_date', today())->count(),
+            'totalCompanies' => $totalCompanies,
+            'totalContacts' => $totalContacts,
+            'openTasks' => $openTasks,
+            'todayMeetings' => $todayMeetings,
 
             'upcomingMeetings' => Meeting::where('status', 'scheduled')
                 ->whereDate('meeting_date', '>=', today())
                 ->orderBy('meeting_date')
+                ->orderBy('start_time')
                 ->take(5)
                 ->get(),
 
             'pendingTasks' => Task::where('status', '!=', 'completed')
+                ->orderByRaw('due_date IS NULL')
                 ->orderBy('due_date')
                 ->take(5)
                 ->get(),
 
-            'recentCalls' => CallLog::latest()
+            'recentCalls' => CallLog::latest('call_date')
+                ->latest('call_time')
                 ->take(5)
                 ->get(),
 
             'chartData' => [
-                'companies' => Company::count(),
-                'contacts' => Contact::count(),
-                'tasks' => Task::count(),
-                'meetings' => Meeting::count(),
-                'calls' => CallLog::count(),
+                'labels' => ['Companies', 'Contacts', 'Tasks', 'Meetings', 'Calls'],
+                'data' => [
+                    $totalCompanies,
+                    $totalContacts,
+                    $totalTasks,
+                    $totalMeetings,
+                    $totalCalls,
+                ],
             ],
         ]);
     }

@@ -2,7 +2,13 @@
 
 @section('content')
 
-<x-crm.company-header :company="$company" />
+<x-crm.company-header
+    :company="$company"
+    :contacts="$contacts"
+    :tasks="$tasks"
+    :meetings="$meetings"
+    :documents="$documents"
+/>
 
 <x-crm.company-tabs
     :company="$company"

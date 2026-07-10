@@ -2,13 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>{{ $pageTitle ?? config('leadpilot.app_name') }}</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        rel="stylesheet">
 
     @livewireStyles
 </head>
@@ -16,8 +26,10 @@
 <body>
 
 <aside class="lp-sidebar">
+
     <div class="lp-sidebar-brand">
         <div class="lp-logo">LP</div>
+
         <div>
             <div class="lp-sidebar-title">LeadPilot AI</div>
             <div class="lp-sidebar-subtitle">Growth Command Center</div>
@@ -26,64 +38,89 @@
 
     <div class="lp-nav-section">CRM</div>
 
-    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-        <i class="fa-solid fa-chart-line"></i> Dashboard
+    <a
+        href="{{ route('dashboard') }}"
+        class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
     </a>
 
-    <a href="{{ route('companies.index') }}" class="{{ request()->routeIs('companies.*') ? 'active' : '' }}">
-        <i class="fa-solid fa-building"></i> Companies
+    <a
+        href="{{ route('companies.index') }}"
+        class="{{ request()->routeIs('companies.*') ? 'active' : '' }}">
+
+        <i class="fa-solid fa-building"></i>
+        Companies
     </a>
 
     <a href="#">
-        <i class="fa-solid fa-address-book"></i> Contacts
+        <i class="fa-solid fa-address-book"></i>
+        Contacts
     </a>
 
-    <a href="{{ route('calendar.index') }}" class="{{ request()->routeIs('calendar.*') ? 'active' : '' }}">
-        <i class="fa-solid fa-calendar-days"></i> Calendar
+    <a
+        href="{{ route('calendar.index') }}"
+        class="{{ request()->routeIs('calendar.*') ? 'active' : '' }}">
+
+        <i class="fa-solid fa-calendar-days"></i>
+        Calendar
     </a>
 
     <div class="lp-nav-section">Sales</div>
 
     <a href="#">
-        <i class="fa-solid fa-bullseye"></i> Leads
+        <i class="fa-solid fa-bullseye"></i>
+        Leads
     </a>
 
     <a href="#">
-        <i class="fa-solid fa-handshake"></i> Deals
+        <i class="fa-solid fa-handshake"></i>
+        Deals
     </a>
 
     <a href="#">
-        <i class="fa-solid fa-list-check"></i> Tasks
+        <i class="fa-solid fa-list-check"></i>
+        Tasks
     </a>
 
     <div class="lp-nav-section">AI</div>
 
     <a href="#">
-        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Workspace
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        AI Workspace
     </a>
 
     <a href="#">
-        <i class="fa-solid fa-magnifying-glass-chart"></i> Lead Discovery
+        <i class="fa-solid fa-magnifying-glass-chart"></i>
+        Lead Discovery
     </a>
 
     <a href="#">
-        <i class="fa-solid fa-globe"></i> Website Analyzer
+        <i class="fa-solid fa-globe"></i>
+        Website Analyzer
     </a>
 
     <div class="lp-nav-section">Admin</div>
 
     <a href="#">
-        <i class="fa-solid fa-chart-pie"></i> Reports
+        <i class="fa-solid fa-chart-pie"></i>
+        Reports
     </a>
 
     <a href="#">
-        <i class="fa-solid fa-gear"></i> Settings
+        <i class="fa-solid fa-gear"></i>
+        Settings
     </a>
+
 </aside>
 
 <div class="lp-main">
+
     <header class="lp-topbar">
+
         <div class="lp-search-wrap">
+
             <input
                 id="globalSearch"
                 class="form-control lp-search-input"
@@ -94,9 +131,11 @@
                 class="list-group position-absolute w-100"
                 style="display:none; z-index:9999; max-height:420px; overflow:auto;">
             </div>
+
         </div>
 
         <div class="lp-topbar-actions">
+
             <button class="lp-icon-btn" type="button">
                 <i class="fa-solid fa-plus"></i>
             </button>
@@ -104,36 +143,182 @@
             <x-ui.notification-dropdown />
 
             <div class="lp-user-pill">
+
                 <div class="lp-avatar">
                     {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
                 </div>
 
                 <span>{{ auth()->user()->name ?? 'User' }}</span>
 
-                <form method="POST" action="{{ route('logout') }}" class="mb-0">
+                <form
+                    method="POST"
+                    action="{{ route('logout') }}"
+                    class="mb-0">
+
                     @csrf
+
                     <button class="btn btn-sm btn-light">
                         Logout
                     </button>
+
                 </form>
+
             </div>
+
         </div>
+
     </header>
 
     <main class="lp-content">
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
         @yield('content')
     </main>
+
 </div>
+
+<div
+    id="lpToastContainer"
+    class="lp-toast-container"
+    aria-live="polite"
+    aria-atomic="true">
+
+    @if(session('success'))
+        <div
+            class="lp-toast lp-toast-success"
+            data-lp-toast>
+
+            <div class="lp-toast-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div class="lp-toast-content">
+                <strong>Success</strong>
+                <p>{{ session('success') }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="lp-toast-close"
+                data-lp-toast-close
+                aria-label="Close">
+
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div
+            class="lp-toast lp-toast-error"
+            data-lp-toast>
+
+            <div class="lp-toast-icon">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </div>
+
+            <div class="lp-toast-content">
+                <strong>Error</strong>
+                <p>{{ session('error') }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="lp-toast-close"
+                data-lp-toast-close
+                aria-label="Close">
+
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+    @endif
+
+    @if(session('warning'))
+        <div
+            class="lp-toast lp-toast-warning"
+            data-lp-toast>
+
+            <div class="lp-toast-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+
+            <div class="lp-toast-content">
+                <strong>Warning</strong>
+                <p>{{ session('warning') }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="lp-toast-close"
+                data-lp-toast-close
+                aria-label="Close">
+
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+    @endif
+
+    @if(session('info'))
+        <div
+            class="lp-toast lp-toast-info"
+            data-lp-toast>
+
+            <div class="lp-toast-icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+
+            <div class="lp-toast-content">
+                <strong>Information</strong>
+                <p>{{ session('info') }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="lp-toast-close"
+                data-lp-toast-close
+                aria-label="Close">
+
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div
+            class="lp-toast lp-toast-error"
+            data-lp-toast>
+
+            <div class="lp-toast-icon">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+
+            <div class="lp-toast-content">
+                <strong>Validation Error</strong>
+                <p>{{ $errors->first() }}</p>
+            </div>
+
+            <button
+                type="button"
+                class="lp-toast-close"
+                data-lp-toast-close
+                aria-label="Close">
+
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+    @endif
+
+</div>
+
+<x-ui.floating-quick-add />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 @livewireScripts
-<x-ui.floating-quick-add />
+
+<x-ui.confirm-modal />
 </body>
 </html>

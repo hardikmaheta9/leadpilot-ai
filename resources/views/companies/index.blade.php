@@ -79,15 +79,19 @@
                                     <i class="fa-solid fa-pen"></i>
                                 </a>
 
-                                <form action="{{ route('companies.destroy', $company->uuid) }}" method="POST" class="d-inline">
+                                <form method="POST" action="{{ route('companies.destroy', $company->uuid) }}"
+                                    data-confirm-delete
+                                    data-confirm-message="Delete {{ $company->company_name }}? All related CRM data may also be removed. This action cannot be undone.">
+
                                     @csrf
                                     @method('DELETE')
 
                                     <button
                                         type="submit"
-                                        class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Are you sure you want to delete {{ addslashes($company->company_name) }}?')">
+                                        class="btn btn-sm btn-outline-danger">
+
                                         <i class="fa-solid fa-trash"></i>
+                                        Delete
                                     </button>
                                 </form>
                             </td>

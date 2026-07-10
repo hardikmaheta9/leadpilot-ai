@@ -1,69 +1,293 @@
 import Chart from 'chart.js/auto';
 
 document.addEventListener('DOMContentLoaded', function () {
-    const canvas = document.getElementById('dashboardChart');
 
-    document.querySelectorAll('[data-count]').forEach((el) => {
-        const target = parseInt(el.dataset.count || '0', 10);
-        let current = 0;
-        const step = Math.max(1, Math.ceil(target / 40));
+    /* ==========================================
+       Animated KPI Counters
+    ========================================== */
 
-        const timer = setInterval(() => {
-            current += step;
+    const counters = document.querySelectorAll('[data-counter]');
 
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
+    counters.forEach(function (element) {
+
+        const target = Number.parseInt(
+            element.dataset.counterValue ||
+            element.dataset.counter ||
+            element.textContent ||
+            '0',
+            10
+        );
+
+        if (!Number.isFinite(target)) {
+            return;
+        }
+
+        const duration = 900;
+        const startTime = performance.now();
+
+        function animateCounter(currentTime) {
+
+            const progress = Math.min(
+                (currentTime - startTime) / duration,
+                1
+            );
+
+            const eased = 1 - Math.pow(1 - progress, 3);
+
+            const current = Math.round(target * eased);
+
+            element.textContent = current.toLocaleString();
+
+            if (progress < 1) {
+                window.requestAnimationFrame(animateCounter);
+            } else {
+                element.textContent = target.toLocaleString();
             }
+        }
 
-            el.textContent = current.toLocaleString();
-        }, 20);
+        window.requestAnimationFrame(animateCounter);
+
     });
 
-    if (!canvas) {
+
+    /* ==========================================
+       Premium Business Overview Chart
+    ========================================== */
+
+    const chartCanvas = document.getElementById('dashboardChart');
+
+    if (!chartCanvas || !window.dashboardStats) {
         return;
     }
 
-    const stats = window.dashboardStats || {};
+    const labels = Array.isArray(window.dashboardStats.labels)
+        ? window.dashboardStats.labels
+        : [];
 
-    new Chart(canvas, {
-        type: 'bar',
+    const values = Array.isArray(window.dashboardStats.data)
+        ? window.dashboardStats.data.map(function (value) {
+            return Number(value) || 0;
+        })
+        : [];
+
+    if (!labels.length || !values.length) {
+        return;
+    }
+
+    const context = chartCanvas.getContext('2d');
+
+    if (!context) {
+        return;
+    }
+
+    // Destroy old chart if it exists
+    const oldChart = Chart.getChart(chartCanvas);
+
+    if (oldChart) {
+        oldChart.destroy();
+    }
+
+    const gradient = context.createLinearGradient(
+        0,
+        0,
+        0,
+        chartCanvas.parentElement?.clientHeight || 340
+    );
+
+    gradient.addColorStop(0, 'rgba(37,99,235,.35)');
+    gradient.addColorStop(.55, 'rgba(124,58,237,.15)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+
+    new Chart(context, {
+
+        type: 'line',
+
         data: {
-            labels: ['Companies', 'Contacts', 'Tasks', 'Meetings', 'Calls'],
-            datasets: [{
-                label: 'CRM Activity',
-                data: [
-                    stats.companies || 0,
-                    stats.contacts || 0,
-                    stats.tasks || 0,
-                    stats.meetings || 0,
-                    stats.calls || 0
-                ],
-                backgroundColor: [
-                    '#2563EB',
-                    '#7C3AED',
-                    '#F59E0B',
-                    '#10B981',
-                    '#EF4444'
-                ],
-                borderRadius: 16
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: { color: '#EEF2F7' }
-                },
-                x: {
-                    grid: { display: false }
+
+            labels: labels,
+
+            datasets: [
+
+                {
+
+                    label: 'CRM Records',
+
+                    data: values,
+
+                    fill: true,
+
+                    backgroundColor: gradient,
+
+                    borderColor: '#2563EB',
+
+                    borderWidth: 3,
+
+                    tension: .42,
+
+                    cubicInterpolationMode: 'monotone',
+
+                    pointRadius: 5,
+
+                    pointHoverRadius: 8,
+
+                    pointHitRadius: 18,
+
+                    pointBackgroundColor: '#FFFFFF',
+
+                    pointBorderColor: '#2563EB',
+
+                    pointBorderWidth: 3,
+
+                    pointHoverBackgroundColor: '#7C3AED',
+
+                    pointHoverBorderColor: '#FFFFFF',
+
+                    pointHoverBorderWidth: 3,
+
                 }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            resizeDelay: 100,
+
+            animation: {
+
+                duration: 1200,
+
+                easing: 'easeOutQuart'
+
+            },
+
+            interaction: {
+
+                intersect: false,
+
+                mode: 'index'
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                },
+
+                tooltip: {
+
+                    displayColors: false,
+
+                    backgroundColor: '#0F172A',
+
+                    titleColor: '#fff',
+
+                    bodyColor: '#fff',
+
+                    padding: 14,
+
+                    cornerRadius: 12,
+
+                    callbacks: {
+
+                        label: function(context){
+
+                            return context.parsed.y.toLocaleString() + ' records';
+
+                        }
+
+                    }
+
+                }
+
+            },
+
+            scales: {
+
+                x: {
+
+                    border: {
+
+                        display: false
+
+                    },
+
+                    grid: {
+
+                        display: false
+
+                    },
+
+                    ticks: {
+
+                        color: '#64748B',
+
+                        font: {
+
+                            size: 11,
+
+                            weight: '700'
+
+                        }
+
+                    }
+
+                },
+
+                y: {
+
+                    beginAtZero: true,
+
+                    suggestedMax: Math.max(...values, 5) + 1,
+
+                    border: {
+
+                        display: false
+
+                    },
+
+                    grid: {
+
+                        color: 'rgba(226,232,240,.8)'
+
+                    },
+
+                    ticks: {
+
+                        precision: 0,
+
+                        color: '#94A3B8',
+
+                        font: {
+
+                            size: 11,
+
+                            weight: '600'
+
+                        },
+
+                        callback: function(value){
+
+                            return Number(value).toLocaleString();
+
+                        }
+
+                    }
+
+                }
+
             }
+
         }
+
     });
+
 });

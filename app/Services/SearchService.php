@@ -2,53 +2,32 @@
 
 namespace App\Services;
 
-use App\Models\Company;
-use App\Models\Contact;
+use App\Services\Search\CallSearch;
+use App\Services\Search\CompanySearch;
+use App\Services\Search\ContactSearch;
+use App\Services\Search\DocumentSearch;
+use App\Services\Search\MeetingSearch;
+use App\Services\Search\NoteSearch;
+use App\Services\Search\TaskSearch;
 
 class SearchService
 {
     public function search(string $query): array
-{
-    $companies = Company::query()
-        ->where(function ($q) use ($query) {
-            $q->where('company_name', 'like', "%{$query}%")
-              ->orWhere('website', 'like', "%{$query}%")
-              ->orWhere('email', 'like', "%{$query}%")
-              ->orWhere('industry', 'like', "%{$query}%")
-              ->orWhere('city', 'like', "%{$query}%")
-              ->orWhere('country', 'like', "%{$query}%");
-        })
-        ->orderBy('company_name')
-        ->limit(8)
-        ->get([
-            'uuid',
-            'company_name',
-            'industry',
-            'city'
-        ]);
+    {
+        $query = trim($query);
 
-    $contacts = Contact::query()
-        ->where(function ($q) use ($query) {
-            $q->where('first_name', 'like', "%{$query}%")
-              ->orWhere('last_name', 'like', "%{$query}%")
-              ->orWhere('email', 'like', "%{$query}%")
-              ->orWhere('phone', 'like', "%{$query}%")
-              ->orWhere('designation', 'like', "%{$query}%");
-        })
-        ->orderBy('first_name')
-        ->limit(8)
-        ->get([
-            'uuid',
-            'company_uuid',
-            'first_name',
-            'last_name',
-            'designation',
-            'email'
-        ]);
+        if ($query === '') {
+            return [];
+        }
 
-    return [
-        'companies' => $companies,
-        'contacts' => $contacts,
-    ];
-}
+        return [
+            'companies' => app(CompanySearch::class)->search($query),
+            'contacts' => app(ContactSearch::class)->search($query),
+            'tasks' => app(TaskSearch::class)->search($query),
+            'meetings' => app(MeetingSearch::class)->search($query),
+            'calls' => app(CallSearch::class)->search($query),
+            'notes' => app(NoteSearch::class)->search($query),
+            'documents' => app(DocumentSearch::class)->search($query),
+        ];
+    }
 }

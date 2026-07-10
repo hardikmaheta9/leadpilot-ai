@@ -1,194 +1,355 @@
-<div class="lp-documents-card">
+<div class="lp-module-card">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="lp-module-header">
 
         <div>
-            <h5 class="mb-1">Company Documents</h5>
-            <small class="text-muted">
-                Store proposals, agreements, quotations, invoices and other files.
-            </small>
+            <span class="lp-module-eyebrow">Files</span>
+
+            <h4>Company Documents</h4>
+
+            <p>Store proposals, quotations, invoices, agreements and other files.</p>
         </div>
 
-    </div>
+        <button
+            type="button"
+            class="lp-btn lp-btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#uploadDocumentModal">
 
-    <form method="POST"
-          enctype="multipart/form-data"
-          action="{{ route('companies.documents.store',$company->uuid) }}">
-
-        @csrf
-
-        <div class="row">
-
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Document Title</label>
-                <input
-                    name="title"
-                    class="form-control"
-                    required>
-            </div>
-
-            <div class="col-md-3 mb-3">
-                <label class="form-label">Category</label>
-
-                <select
-                    name="category"
-                    class="form-select">
-
-                    <option>General</option>
-                    <option>Proposal</option>
-                    <option>Quotation</option>
-                    <option>Invoice</option>
-                    <option>Agreement</option>
-                    <option>Purchase Order</option>
-                    <option>Presentation</option>
-
-                </select>
-
-            </div>
-
-            <div class="col-md-5 mb-3">
-                <label class="form-label">Select File</label>
-
-                <input
-                    type="file"
-                    name="file"
-                    class="form-control"
-                    required>
-            </div>
-
-        </div>
-
-        <button class="btn btn-primary">
-            <i class="fa-solid fa-upload me-2"></i>
+            <i class="fa-solid fa-cloud-arrow-up"></i>
             Upload Document
         </button>
 
-    </form>
+    </div>
 
-    <hr class="my-4">
+    <div class="lp-module-body">
 
-    <div class="row">
+        <div class="row g-4">
 
-        @forelse($documents as $document)
+            @forelse($documents as $document)
 
-            <div class="col-lg-6 mb-3">
+                @php
+                    $extension = strtolower(
+                        pathinfo($document->original_filename, PATHINFO_EXTENSION)
+                    );
 
-                <div class="lp-document-card">
+                    $fileIcon = match($extension) {
+                        'pdf' => 'fa-solid fa-file-pdf',
+                        'doc', 'docx' => 'fa-solid fa-file-word',
+                        'xls', 'xlsx', 'csv' => 'fa-solid fa-file-excel',
+                        'ppt', 'pptx' => 'fa-solid fa-file-powerpoint',
+                        'jpg', 'jpeg', 'png', 'gif', 'webp' => 'fa-solid fa-file-image',
+                        'zip', 'rar', '7z' => 'fa-solid fa-file-zipper',
+                        default => 'fa-solid fa-file-lines',
+                    };
 
-                    <div class="d-flex justify-content-between">
+                    $fileClass = match($extension) {
+                        'pdf' => 'lp-document-pdf',
+                        'doc', 'docx' => 'lp-document-word',
+                        'xls', 'xlsx', 'csv' => 'lp-document-excel',
+                        'ppt', 'pptx' => 'lp-document-powerpoint',
+                        'jpg', 'jpeg', 'png', 'gif', 'webp' => 'lp-document-image',
+                        'zip', 'rar', '7z' => 'lp-document-archive',
+                        default => 'lp-document-general',
+                    };
 
-                        <div>
+                    $fileSize = $document->file_size >= 1048576
+                        ? number_format($document->file_size / 1048576, 2) . ' MB'
+                        : number_format($document->file_size / 1024, 1) . ' KB';
 
-                            <h6 class="mb-1">
+                    $fileUrl = asset('storage/' . $document->path);
+                @endphp
 
-                                {{ $document->title }}
+                <div class="col-xl-4 col-md-6">
 
-                            </h6>
+                    <div class="lp-premium-document-card">
 
-                            <small class="text-muted">
+                        <div class="lp-document-card-top">
 
-                                {{ $document->category }}
+                            <div class="lp-document-identity">
 
-                            </small>
+                                <div class="lp-document-icon {{ $fileClass }}">
+                                    <i class="{{ $fileIcon }}"></i>
+                                </div>
+
+                                <div class="lp-document-title-wrap">
+
+                                    <h5>{{ $document->title }}</h5>
+
+                                    <div class="lp-document-badges">
+
+                                        <span class="lp-document-category">
+                                            {{ $document->category ?: 'General' }}
+                                        </span>
+
+                                        <span class="lp-document-extension">
+                                            {{ strtoupper($extension ?: 'FILE') }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <x-ui.action-menu>
+
+                                <a
+                                    href="{{ $fileUrl }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+
+                                    <i class="fa-solid fa-eye"></i>
+                                    View Document
+                                </a>
+
+                                <a href="{{ $fileUrl }}" download>
+                                    <i class="fa-solid fa-download"></i>
+                                    Download Document
+                                </a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <form
+                                    method="POST"
+                                    action="{{ route('companies.documents.destroy', [$company->uuid, $document->uuid]) }}"
+                                    data-confirm-delete
+                                    data-confirm-message="Delete this document? This action cannot be undone.">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit" class="text-danger">
+                                        <i class="fa-solid fa-trash"></i>
+                                        Delete Document
+                                    </button>
+
+                                </form>
+
+                            </x-ui.action-menu>
 
                         </div>
 
-                        <span class="badge bg-primary">
+                        <div class="lp-document-preview {{ $fileClass }}">
 
-                            {{ strtoupper(pathinfo($document->original_filename, PATHINFO_EXTENSION)) }}
+                            <i class="{{ $fileIcon }}"></i>
 
-                        </span>
-
-                    </div>
-
-                    <hr>
-
-                    <div class="small text-muted">
-
-                        <div>
-
-                            <i class="fa-solid fa-file me-2"></i>
-
-                            {{ $document->original_filename }}
+                            <span>{{ strtoupper($extension ?: 'FILE') }}</span>
 
                         </div>
 
-                        <div class="mt-2">
+                        <div class="lp-document-details">
 
-                            <i class="fa-solid fa-calendar me-2"></i>
+                            <div class="lp-document-detail">
 
-                            {{ $document->created_at->format('d M Y') }}
+                                <span>
+                                    <i class="fa-solid fa-file-signature"></i>
+                                </span>
+
+                                <div>
+                                    <small>Original File</small>
+                                    <strong title="{{ $document->original_filename }}">
+                                        {{ $document->original_filename }}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                            <div class="lp-document-detail">
+
+                                <span>
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                </span>
+
+                                <div>
+                                    <small>Uploaded</small>
+                                    <strong>{{ $document->created_at->format('d M Y') }}</strong>
+                                </div>
+
+                            </div>
+
+                            <div class="lp-document-detail">
+
+                                <span>
+                                    <i class="fa-solid fa-hard-drive"></i>
+                                </span>
+
+                                <div>
+                                    <small>File Size</small>
+                                    <strong>{{ $fileSize }}</strong>
+                                </div>
+
+                            </div>
 
                         </div>
 
-                        <div class="mt-2">
+                        <div class="lp-document-card-footer">
 
-                            <i class="fa-solid fa-hard-drive me-2"></i>
+                            <a
+                                href="{{ $fileUrl }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="lp-document-action-btn">
 
-                            {{ number_format($document->file_size/1024,1) }} KB
+                                <i class="fa-solid fa-eye"></i>
+                                View
+                            </a>
+
+                            <a
+                                href="{{ $fileUrl }}"
+                                download
+                                class="lp-document-action-btn lp-document-download-btn">
+
+                                <i class="fa-solid fa-download"></i>
+                                Download
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{{ route('companies.documents.destroy', [$company->uuid, $document->uuid]) }}"
+                                    data-confirm-delete
+                                    data-confirm-message="Delete this document? This action cannot be undone.">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button
+                                    type="submit"
+                                    class="lp-document-action-btn lp-document-delete-btn">
+
+                                    <i class="fa-solid fa-trash"></i>
+                                    Delete
+                                </button>
+
+                            </form>
 
                         </div>
-
-                    </div>
-
-                    <div class="mt-4 d-flex gap-2">
-
-                        <a
-                            href="{{ asset('storage/'.$document->path) }}"
-                            target="_blank"
-                            class="btn btn-sm btn-outline-primary">
-
-                            View
-
-                        </a>
-
-                        <a
-                            href="{{ asset('storage/'.$document->path) }}"
-                            download
-                            class="btn btn-sm btn-outline-success">
-
-                            Download
-
-                        </a>
-
-                        <form
-                            method="POST"
-                            action="{{ route('companies.documents.destroy',[$company->uuid,$document->uuid]) }}"
-                            onsubmit="return confirm('Delete document?')">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button class="btn btn-sm btn-outline-danger">
-
-                                Delete
-
-                            </button>
-
-                        </form>
 
                     </div>
 
                 </div>
 
-            </div>
+            @empty
 
-        @empty
+                <div class="col-12">
 
-            <div class="text-center py-5">
+                    <x-ui.empty-state
+                        icon="fa-solid fa-folder-open"
+                        title="No Documents"
+                        subtitle="Upload the first document for this company."
+                    />
 
-                <i class="fa-solid fa-folder-open fa-3x text-muted mb-3"></i>
+                </div>
 
-                <h5>No Documents</h5>
+            @endforelse
 
-                <p class="text-muted">
-                    Upload your first company document.
-                </p>
-
-            </div>
-
-        @endforelse
+        </div>
 
     </div>
 
 </div>
+
+<x-ui.modal
+    id="uploadDocumentModal"
+    title="Upload Company Document">
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        action="{{ route('companies.documents.store', $company->uuid) }}">
+
+        @csrf
+
+        <div class="row g-3">
+
+            <div class="col-md-7">
+
+                <label class="form-label">
+                    Document Title <span class="text-danger">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    value="{{ old('title') }}"
+                    required>
+
+            </div>
+
+            <div class="col-md-5">
+
+                <label class="form-label">Category</label>
+
+                <select name="category" class="form-select">
+
+                    @foreach([
+                        'General',
+                        'Proposal',
+                        'Quotation',
+                        'Invoice',
+                        'Agreement',
+                        'Purchase Order',
+                        'Presentation'
+                    ] as $category)
+
+                        <option
+                            value="{{ $category }}"
+                            @selected(old('category') === $category)>
+
+                            {{ $category }}
+                        </option>
+
+                    @endforeach
+
+                </select>
+
+            </div>
+
+            <div class="col-12">
+
+                <label class="form-label">
+                    Select File <span class="text-danger">*</span>
+                </label>
+
+                <div class="lp-document-upload-box">
+
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                    <strong>Select a document to upload</strong>
+
+                    <span>PDF, Word, Excel, PowerPoint, image or archive</span>
+
+                    <input
+                        type="file"
+                        name="file"
+                        class="form-control"
+                        required>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal">
+
+                Cancel
+            </button>
+
+            <button type="submit" class="lp-btn lp-btn-primary">
+
+                <i class="fa-solid fa-upload"></i>
+                Upload Document
+            </button>
+
+        </div>
+
+    </form>
+
+</x-ui.modal>

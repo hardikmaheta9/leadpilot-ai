@@ -4,20 +4,16 @@
 'subtitle'
 ])
 
-<div class="lp-empty">
+<div class="lp-empty-state">
 
-<i class="{{ $icon }}"></i>
+    <div class="lp-empty-icon">
 
-<h5>
+        <i class="{{ $icon }}"></i>
 
-{{ $title }}
+    </div>
 
-</h5>
+    <h5>{{ $title }}</h5>
 
-<p>
-
-{{ $subtitle }}
-
-</p>
+    <p>{{ $subtitle }}</p>
 
 </div>

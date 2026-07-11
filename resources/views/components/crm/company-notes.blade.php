@@ -42,7 +42,6 @@
                                 </div>
 
                                 <div>
-
                                     <strong>
                                         {{ $note->created_at->format('d M Y') }}
                                     </strong>
@@ -50,7 +49,6 @@
                                     <small>
                                         {{ $note->created_at->format('h:i A') }}
                                     </small>
-
                                 </div>
 
                             </div>
@@ -58,11 +56,11 @@
                             <x-ui.action-menu>
 
                                 <button
+                                    type="button"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editNote{{ $note->id }}">
 
                                     <i class="fa-solid fa-pen"></i>
-
                                     Edit Note
 
                                 </button>
@@ -71,17 +69,18 @@
 
                                 <form
                                     method="POST"
-                                    action="{{ route('companies.notes.destroy',[$company->uuid,$note->uuid]) }}"
+                                    action="{{ route('companies.notes.destroy', [$company->uuid, $note->uuid]) }}"
                                     data-confirm-delete
                                     data-confirm-message="Delete this note? This action cannot be undone.">
 
                                     @csrf
                                     @method('DELETE')
 
-                                    <button class="text-danger">
+                                    <button
+                                        type="submit"
+                                        class="text-danger">
 
                                         <i class="fa-solid fa-trash"></i>
-
                                         Delete Note
 
                                     </button>
@@ -93,19 +92,14 @@
                         </div>
 
                         <div class="lp-note-content">
-
-                           {!! nl2br(e(trim($note->note))) !!}
-
+                            {!! nl2br(e(trim($note->note))) !!}
                         </div>
 
                         <div class="lp-note-footer">
 
                             <span>
-
                                 <i class="fa-regular fa-clock"></i>
-
                                 {{ $note->created_at->diffForHumans() }}
-
                             </span>
 
                         </div>
@@ -114,33 +108,16 @@
 
                 </div>
 
-                <x-ui.modal id="editNote{{ $note->id }}" title="Edit Note">
-
-                 <form method="POST" action="{{ route('companies.notes.update', [$company->uuid, $note->uuid]) }}">
-
-                    @csrf
-                    @method('PUT')
-
-                        <textarea name="note" rows="8" class="form-control" required>{{ old('note', trim($note->note)) }}</textarea>
-
-                        <div class="text-end mt-4">
-                            <button class="lp-btn lp-btn-primary">
-                                Save Changes
-                            </button>
-                        </div>
-
-                    </form>
-
-                </x-ui.modal>
-
             @empty
 
                 <div class="col-12">
 
                     <x-ui.empty-state
-                        icon="fa-solid fa-note-sticky"
+                        icon="fa-regular fa-note-sticky"
                         title="No Notes Yet"
-                        subtitle="Create your first note for this company."
+                        message="Capture meeting discussions, follow-ups, ideas and important client information in one place."
+                        buttonText="Add First Note"
+                        buttonTarget="#addNoteModal"
                     />
 
                 </div>
@@ -154,29 +131,105 @@
 </div>
 
 
+{{-- Edit Note Modals --}}
+@foreach($notes as $note)
+
+    <x-ui.modal
+        id="editNote{{ $note->id }}"
+        title="Edit Note">
+
+        <form
+            method="POST"
+            action="{{ route('companies.notes.update', [$company->uuid, $note->uuid]) }}">
+
+            @csrf
+            @method('PUT')
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Note
+                </label>
+
+                <textarea
+                    name="note"
+                    rows="8"
+                    class="form-control"
+                    required>{{ old('note', trim($note->note)) }}</textarea>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+
+                <button
+                    type="button"
+                    class="btn btn-light"
+                    data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="lp-btn lp-btn-primary">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </x-ui.modal>
+
+@endforeach
+
+
+{{-- Add Note Modal --}}
 <x-ui.modal
     id="addNoteModal"
     title="Add Company Note">
 
     <form
         method="POST"
-        action="{{ route('companies.notes.store',$company->uuid) }}">
+        action="{{ route('companies.notes.store', $company->uuid) }}">
 
         @csrf
 
-        <textarea
-            name="note"
-            rows="8"
-            class="form-control"
-            placeholder="Write meeting notes, reminders, discussion summary..."
-            required>{{ old('note') }}</textarea>
+        <div class="mb-3">
 
-        <div class="text-end mt-4">
+            <label class="form-label">
+                Note
+            </label>
 
-            <button class="lp-btn lp-btn-primary">
+            <textarea
+                name="note"
+                rows="8"
+                class="form-control"
+                placeholder="Write meeting notes, reminders, discussion summary..."
+                required>{{ old('note') }}</textarea>
+
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+
+            <button
+                type="button"
+                class="btn btn-light"
+                data-bs-dismiss="modal">
+
+                Cancel
+
+            </button>
+
+            <button
+                type="submit"
+                class="lp-btn lp-btn-primary">
 
                 <i class="fa-solid fa-plus"></i>
-
                 Add Note
 
             </button>

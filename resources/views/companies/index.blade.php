@@ -97,15 +97,23 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
-                            <td colspan="6" class="text-center py-5">
-                                <h5>No companies found</h5>
-                                <p class="text-muted">Start by adding your first prospect company.</p>
-                                <a href="{{ route('companies.create') }}" class="btn btn-primary">
-                                    Add Company
-                                </a>
-                            </td>
-                        </tr>
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <x-ui.empty-state
+                                icon="fa-solid fa-building"
+                                title="No Companies Found"
+                                message="Start building your CRM by adding your first company."
+                                buttonText="Add Company"
+                                buttonUrl="{{ route('companies.create') }}"
+                            />
+
+                        </td>
+
+                    </tr>
+
                     @endforelse
                 </tbody>
             </table>

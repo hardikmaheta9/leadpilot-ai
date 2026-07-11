@@ -142,7 +142,9 @@
             <x-ui.empty-state
                 icon="fa-solid fa-clock-rotate-left"
                 title="No Timeline Yet"
-                subtitle="Company activities will appear here automatically."
+                message="Notes, tasks, meetings, calls and document uploads will appear here automatically as your team works with this company."
+                buttonText="Add First Activity"
+                buttonUrl="{{ route('companies.show', [$company->uuid, 'tab' => 'activities']) }}"
             />
 
         @endforelse

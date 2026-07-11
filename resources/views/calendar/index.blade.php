@@ -6,9 +6,26 @@
     title="Calendar"
     subtitle="Unified view of tasks, meetings and calls."
 />
-
 <x-cards.card>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h5 class="mb-1">Company Calendar</h5>
+
+            <small class="text-muted">
+
+                Meetings, tasks and calls in one unified calendar.
+
+            </small>
+
+        </div>
+
+    </div>
+
     <div id="leadpilotCalendar"></div>
+
 </x-cards.card>
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">

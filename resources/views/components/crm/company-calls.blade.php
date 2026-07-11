@@ -195,8 +195,33 @@
                     </div>
 
                 </div>
+            @empty
 
-                <x-ui.modal
+                <div class="col-12">
+
+                    <x-ui.empty-state
+                        icon="fa-solid fa-phone-volume"
+                        title="No Calls Logged"
+                        message="Record the first incoming or outgoing call for this company."
+                        buttonText="Add First Call"
+                        buttonTarget="#addCallModal"
+                    />
+
+                </div>
+
+            @endforelse
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{-- Edit Call Modals: kept outside the animated module card --}
+@foreach($calls as $call)
+
+<x-ui.modal
                     id="editCallModal{{ $call->id }}"
                     title="Edit Call">
 
@@ -329,25 +354,8 @@
 
                 </x-ui.modal>
 
-            @empty
+@endforeach
 
-                <div class="col-12">
-
-                    <x-ui.empty-state
-                        icon="fa-solid fa-phone-volume"
-                        title="No Calls Logged"
-                        subtitle="Add the first incoming or outgoing call for this company."
-                    />
-
-                </div>
-
-            @endforelse
-
-        </div>
-
-    </div>
-
-</div>
 
 <x-ui.modal id="addCallModal" title="Add New Call">
 
@@ -469,4 +477,4 @@
 
     </form>
 
-</x-ui.modal>   
+</x-ui.modal>

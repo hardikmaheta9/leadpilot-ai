@@ -200,7 +200,32 @@
 
                     </div>
 
+                </div>            @empty
+
+               <div class="col-12">
+
+                    <x-ui.empty-state
+                        icon="fa-solid fa-list-check"
+                        title="No Tasks Yet"
+                        message="Create follow-ups, reminders and action items so nothing slips through the cracks."
+                        buttonText="Create First Task"
+                        buttonTarget="#addTaskModal"
+                    />
+
                 </div>
+
+            @endforelse
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{{-- Edit Task Modals --}}
+@foreach($tasks as $task)
+
 
                 <x-ui.modal
                     id="editTaskModal{{ $task->id }}"
@@ -306,23 +331,8 @@
 
                 </x-ui.modal>
 
-            @empty
 
-                <div class="col-12">
-                    <x-ui.empty-state
-                        icon="fa-solid fa-list-check"
-                        title="No Tasks Yet"
-                        subtitle="Create the first follow-up task for this company."
-                    />
-                </div>
-
-            @endforelse
-
-        </div>
-
-    </div>
-
-</div>
+@endforeach
 
 <x-ui.modal id="addTaskModal" title="Add New Task">
 

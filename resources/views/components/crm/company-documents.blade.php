@@ -235,8 +235,10 @@
 
                     <x-ui.empty-state
                         icon="fa-solid fa-folder-open"
-                        title="No Documents"
-                        subtitle="Upload the first document for this company."
+                        title="No Documents Yet"
+                        message="Keep proposals, quotations, agreements, invoices and other important company files organized in one place."
+                        buttonText="Upload First Document"
+                        buttonTarget="#uploadDocumentModal"
                     />
 
                 </div>

@@ -271,8 +271,33 @@
                     </div>
 
                 </div>
+            @empty
 
-                <x-ui.modal
+                <div class="col-12">
+
+                        <x-ui.empty-state
+                            icon="fa-solid fa-calendar-days"
+                            title="No Meetings Scheduled"
+                            message="Schedule client meetings, demos and follow-ups to keep every opportunity moving."
+                            buttonText="Schedule Meeting"
+                            buttonTarget="#addMeetingModal"
+                        />
+
+                    </div>
+
+            @endforelse
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{-- Edit Meeting Modals: kept outside the animated module card --}
+@foreach($meetings as $meeting)
+
+<x-ui.modal
                     id="editMeetingModal{{ $meeting->id }}"
                     title="Edit Meeting">
 
@@ -399,25 +424,8 @@
 
                 </x-ui.modal>
 
-            @empty
+@endforeach
 
-                <div class="col-12">
-
-                    <x-ui.empty-state
-                        icon="fa-solid fa-calendar-days"
-                        title="No Meetings Scheduled"
-                        subtitle="Schedule the first meeting for this company."
-                    />
-
-                </div>
-
-            @endforelse
-
-        </div>
-
-    </div>
-
-</div>
 
 <x-ui.modal id="addMeetingModal" title="Schedule New Meeting">
 

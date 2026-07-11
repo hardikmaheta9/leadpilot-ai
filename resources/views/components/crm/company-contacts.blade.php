@@ -230,8 +230,33 @@
 
 </div>
 {{-- End col-xl-4 col-md-6 --}}
+            @empty
 
-                <x-ui.modal
+                    <div class="col-12">
+
+                        <x-ui.empty-state
+                            icon="fa-solid fa-address-book"
+                            title="No Contacts Added"
+                            message="Start building relationships by adding your first contact for this company."
+                            buttonText="Add First Contact"
+                            buttonTarget="#addContactModal"
+                        />
+
+                    </div>
+
+            @endforelse
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{{-- Edit Contact Modals: kept outside the animated module card --}}
+@foreach($contacts as $contact)
+
+<x-ui.modal
                     id="editContactModal{{ $contact->id }}"
                     title="Edit Contact">
 
@@ -339,25 +364,8 @@
 
                 </x-ui.modal>
 
-            @empty
+@endforeach
 
-                <div class="col-12">
-
-                    <x-ui.empty-state
-                        icon="fa-solid fa-address-book"
-                        title="No Contacts Yet"
-                        subtitle="Add the first contact connected with this company."
-                    />
-
-                </div>
-
-            @endforelse
-
-        </div>
-
-    </div>
-
-</div>
 
 <x-ui.modal id="addContactModal" title="Add New Contact">
 

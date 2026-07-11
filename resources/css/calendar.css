@@ -3,3 +3,129 @@
 @tailwind utilities;
 
 @import './leadpilot.css';
+
+/* ==========================================
+   Sprint 9.8.8.4 — Premium Calendar
+========================================== */
+
+#leadpilotCalendar{
+    min-height:620px;
+    padding:6px;
+}
+
+#leadpilotCalendar .fc{
+    --fc-border-color:#E2E8F0;
+    --fc-page-bg-color:#FFFFFF;
+    --fc-neutral-bg-color:#F8FAFC;
+    --fc-today-bg-color:#EFF6FF;
+    color:#0F172A;
+    font-family:inherit;
+}
+
+#leadpilotCalendar .fc-toolbar{
+    gap:16px;
+    margin-bottom:24px;
+}
+
+#leadpilotCalendar .fc-toolbar-title{
+    color:#0F172A;
+    font-size:22px;
+    font-weight:900;
+}
+
+#leadpilotCalendar .fc-button{
+    min-height:40px;
+    padding:8px 13px;
+    border:1px solid #DCE4EF;
+    border-radius:11px;
+    background:#FFFFFF;
+    color:#334155;
+    box-shadow:none;
+    font-size:12px;
+    font-weight:800;
+    text-transform:capitalize;
+}
+
+#leadpilotCalendar .fc-button:hover{
+    border-color:#BFDBFE;
+    background:#EFF6FF;
+    color:#2563EB;
+}
+
+#leadpilotCalendar .fc-button-primary:not(:disabled).fc-button-active,
+#leadpilotCalendar .fc-button-primary:not(:disabled):active{
+    border-color:#2563EB;
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+    color:#FFFFFF;
+}
+
+#leadpilotCalendar .fc-scrollgrid{
+    overflow:hidden;
+    border:1px solid #E2E8F0;
+    border-radius:18px;
+}
+
+#leadpilotCalendar .fc-col-header-cell{
+    padding:12px 8px;
+    background:#F8FAFC;
+}
+
+#leadpilotCalendar .fc-col-header-cell-cushion{
+    color:#64748B;
+    font-size:11px;
+    font-weight:900;
+    text-decoration:none;
+    text-transform:uppercase;
+}
+
+#leadpilotCalendar .fc-daygrid-day.fc-day-today{
+    background:#EFF6FF;
+}
+
+#leadpilotCalendar .fc-daygrid-day-number{
+    padding:9px;
+    color:#334155;
+    font-size:12px;
+    font-weight:850;
+    text-decoration:none;
+}
+
+#leadpilotCalendar .fc-event{
+    margin:2px 4px;
+    padding:4px 7px;
+    border:0;
+    border-radius:8px;
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+    box-shadow:0 5px 12px rgba(37,99,235,.14);
+    cursor:pointer;
+}
+
+#leadpilotCalendar .fc-event-title,
+#leadpilotCalendar .fc-event-time{
+    color:#FFFFFF;
+    font-size:11px;
+    font-weight:800;
+}
+
+@media (max-width: 767.98px){
+    #leadpilotCalendar{
+        min-height:520px;
+        padding:0;
+    }
+
+    #leadpilotCalendar .fc-toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    #leadpilotCalendar .fc-toolbar-chunk{
+        display:flex;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    #leadpilotCalendar .fc-toolbar-title{
+        font-size:19px;
+        text-align:center;
+    }
+}

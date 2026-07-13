@@ -68,6 +68,10 @@ class CompanyController extends Controller
 
             $calls = $company->callLogs;
 
+            $aiProfile = $company->aiProfile;
+
+            $websiteAnalysis = $company->websiteAnalysis;
+
             return view('companies.show', compact(
                         'company',
                         'activities',
@@ -77,7 +81,9 @@ class CompanyController extends Controller
                         'documents',
                         'meetings',
                         'activeTab',
-                        'calls'
+                        'calls',
+                        'aiProfile',
+                        'websiteAnalysis'
                     ));
     }
 

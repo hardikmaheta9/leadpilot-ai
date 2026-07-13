@@ -437,3 +437,300 @@
         justify-content:center;
     }
 }
+
+/* ==========================================
+   Sprint 10.2 — AI Dashboard Hero
+========================================== */
+
+.lp-dashboard-hero{
+    align-items:stretch;
+    gap:30px;
+}
+
+.lp-hero-left{
+    position:relative;
+    z-index:2;
+    flex:1;
+    min-width:0;
+}
+
+.lp-hero-right{
+    position:relative;
+    z-index:2;
+    width:230px;
+    flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+}
+
+.lp-ai-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+    padding:8px 12px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    color:#BFDBFE;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    backdrop-filter:blur(8px);
+}
+
+.lp-hero-subtitle{
+    max-width:760px;
+    color:#CBD5E1 !important;
+    line-height:1.75;
+}
+
+.lp-hero-subtitle strong{
+    color:#FFFFFF;
+    font-weight:950;
+}
+
+.lp-ai-brief{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+    margin-top:24px;
+}
+
+.lp-ai-brief-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:18px;
+    background:rgba(255,255,255,.07);
+    backdrop-filter:blur(10px);
+    transition:transform .2s ease,background-color .2s ease;
+}
+
+.lp-ai-brief-item:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.11);
+}
+
+.lp-ai-brief-item > span{
+    width:40px;
+    height:40px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    background:rgba(255,255,255,.10);
+    font-size:18px;
+}
+
+.lp-ai-brief-item strong{
+    display:block;
+    color:#FFFFFF;
+    font-size:16px;
+    font-weight:950;
+}
+
+.lp-ai-brief-item small{
+    display:block;
+    margin-top:2px;
+    color:#CBD5E1;
+    font-size:10px;
+    font-weight:750;
+}
+
+.lp-ai-score-circle{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border:10px solid rgba(255,255,255,.10);
+    background:
+        radial-gradient(circle at 35% 30%,rgba(255,255,255,.18),transparent 34%),
+        linear-gradient(135deg,#2563EB,#7C3AED);
+    box-shadow:0 22px 50px rgba(37,99,235,.34);
+}
+
+.lp-ai-score-circle span{
+    color:#FFFFFF;
+    font-size:42px;
+    line-height:1;
+    font-weight:950;
+    letter-spacing:-.04em;
+}
+
+.lp-ai-score-circle small{
+    margin-top:7px;
+    color:#DBEAFE;
+    font-size:11px;
+    font-weight:850;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+}
+
+@media (max-width: 1199.98px){
+    .lp-ai-brief{
+        grid-template-columns:1fr;
+    }
+}
+
+@media (max-width: 991.98px){
+    .lp-dashboard-hero{
+        flex-direction:column;
+    }
+
+    .lp-hero-right{
+        width:100%;
+        flex-direction:row;
+        justify-content:flex-start;
+    }
+}
+
+@media (max-width: 575.98px){
+    .lp-dashboard-hero{
+        padding:24px;
+    }
+
+    .lp-dashboard-hero h1{
+        font-size:28px;
+    }
+
+    .lp-ai-brief{
+        grid-template-columns:1fr;
+    }
+
+    .lp-hero-right{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .lp-ai-score-circle{
+        width:120px;
+        height:120px;
+    }
+
+    .lp-ai-score-circle span{
+        font-size:34px;
+    }
+
+    .lp-hero-actions .lp-btn{
+        width:100%;
+        justify-content:center;
+    }
+}
+
+/* ==========================================
+   Sprint 10.2 — AI Analytics Dashboard
+========================================== */
+
+.lp-analytics-card{
+    position:relative;
+    min-height:320px;
+    padding:20px;
+    border:1px solid var(--lp-border);
+    border-radius:22px;
+    background:
+        radial-gradient(circle at top right, rgba(37,99,235,.06), transparent 32%),
+        #FFFFFF;
+    box-shadow:var(--lp-shadow-sm);
+    overflow:hidden;
+}
+
+.lp-analytics-card h6{
+    margin:0 0 18px;
+    color:var(--lp-text);
+    font-size:15px;
+    font-weight:950;
+    letter-spacing:-.015em;
+}
+
+.lp-analytics-card canvas{
+    display:block;
+    width:100% !important;
+    height:250px !important;
+}
+
+.lp-opportunity-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:15px 0;
+    border-bottom:1px solid var(--lp-border);
+}
+
+.lp-opportunity-card:last-child{
+    border-bottom:0;
+}
+
+.lp-opportunity-card > div:first-child{
+    min-width:0;
+}
+
+.lp-opportunity-card strong{
+    display:block;
+    color:var(--lp-text);
+    font-size:13px;
+    font-weight:900;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.lp-opportunity-card small{
+    display:block;
+    margin-top:4px;
+    color:var(--lp-muted);
+    font-size:11px;
+    font-weight:700;
+}
+
+.lp-opportunity-score{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    color:#FFFFFF;
+    font-size:16px;
+    font-weight:950;
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+    box-shadow:0 12px 26px rgba(37,99,235,.22);
+    transition:var(--lp-transition);
+}
+
+.lp-opportunity-card:hover .lp-opportunity-score{
+    transform:scale(1.04);
+}
+
+@media (max-width: 1199.98px){
+    .lp-analytics-card{
+        min-height:300px;
+    }
+
+    .lp-analytics-card canvas{
+        height:230px !important;
+    }
+}
+
+@media (max-width: 767.98px){
+    .lp-analytics-card{
+        min-height:280px;
+        padding:16px;
+    }
+
+    .lp-analytics-card canvas{
+        height:220px !important;
+    }
+}

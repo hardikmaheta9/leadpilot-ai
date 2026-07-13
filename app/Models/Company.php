@@ -88,4 +88,36 @@ class Company extends Model
             ->latest('call_date');
     }
 
+
+        /*
+    |--------------------------------------------------------------------------
+    | AI Profile
+    |--------------------------------------------------------------------------
+    */
+
+    public function aiProfile()
+    {
+        return $this->hasOne(
+            CompanyAiProfile::class,
+            'company_uuid',
+            'uuid'
+        );
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Website Analysis
+    |--------------------------------------------------------------------------
+    */
+
+    public function websiteAnalysis()
+    {
+        return $this->hasOne(
+            CompanyWebsiteAnalysis::class,
+            'company_uuid',
+            'uuid'
+        );
+    }
+
 }

@@ -3,25 +3,127 @@
 @section('content')
 
 <div class="lp-dashboard-hero">
-    <div>
-        <h1>Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 18 ? 'Afternoon' : 'Evening') }}, {{ explode(' ', auth()->user()->name)[0] }} 👋</h1>
-        <p>Your AI-powered CRM command center is ready.</p>
+
+    <div class="lp-hero-left">
+
+        <span class="lp-ai-badge">
+            <i class="fa-solid fa-sparkles"></i>
+            AI Sales Intelligence
+        </span>
+
+        <h1>
+            Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 18 ? 'Afternoon' : 'Evening') }},
+            {{ explode(' ', auth()->user()->name)[0] }} 👋
+        </h1>
+
+        <p class="lp-hero-subtitle">
+
+            I analyzed
+
+            <strong>{{ number_format($totalAiAnalyzed) }}</strong>
+
+            companies.
+
+            There are
+
+            <strong>{{ number_format($highOpportunity) }}</strong>
+
+            high opportunity prospects ready for follow-up.
+
+        </p>
+
+        <div class="lp-ai-brief">
+
+            <div class="lp-ai-brief-item">
+
+                <span>🎯</span>
+
+                <div>
+
+                    <strong>{{ number_format($highOpportunity) }}</strong>
+
+                    <small>High Opportunity Companies</small>
+
+                </div>
+
+            </div>
+
+            <div class="lp-ai-brief-item">
+
+                <span>📈</span>
+
+                <div>
+
+                    <strong>{{ $averageLeadScore }}/100</strong>
+
+                    <small>Average Lead Score</small>
+
+                </div>
+
+            </div>
+
+            <div class="lp-ai-brief-item">
+
+                <span>💰</span>
+
+                <div>
+
+                    <strong>₹{{ number_format($estimatedPipeline) }}</strong>
+
+                    <small>Estimated Pipeline</small>
+
+                </div>
+
+            </div>
+
+        </div>
 
         <div class="lp-hero-actions">
-            <a href="{{ route('companies.create') }}" class="lp-btn lp-btn-primary">
-                <i class="fa-solid fa-plus"></i> Add Company
+
+            <a
+                href="{{ route('companies.create') }}"
+                class="lp-btn lp-btn-primary">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Company
+
             </a>
 
-            <a href="{{ route('calendar.index') }}" class="lp-btn lp-btn-light">
-                <i class="fa-solid fa-calendar-days"></i> Open Calendar
+            <a
+                href="{{ route('calendar.index') }}"
+                class="lp-btn lp-btn-light">
+
+                <i class="fa-solid fa-calendar-days"></i>
+
+                Calendar
+
             </a>
+
         </div>
+
     </div>
 
-    <div class="lp-hero-date">
-        <strong>{{ now()->format('d') }}</strong>
-        <span>{{ now()->format('F Y') }}</span>
+    <div class="lp-hero-right">
+
+        <div class="lp-ai-score-circle">
+
+            <span>{{ $averageLeadScore }}</span>
+
+            <small>AI Score</small>
+
+        </div>
+
+        <div class="lp-hero-date">
+
+            <strong>{{ now()->format('d') }}</strong>
+
+            <span>{{ now()->format('F Y') }}</span>
+
+        </div>
+
     </div>
+
 </div>
 
 <div class="row">
@@ -32,59 +134,127 @@
 </div>
 
 <div class="row mt-4">
-    <div class="col-lg-8">
-        <x-ui.section-card title="Business Overview" icon="fa-solid fa-chart-line">
-            <div class="lp-business-chart-wrap">
-               <canvas id="dashboardChart"></canvas>
-           </div>
-        </x-ui.section-card>
-    </div>
 
-    <div class="col-lg-4">
-        <x-ui.section-card title="AI Command Center" icon="fa-solid fa-robot">
-            <div class="lp-ai-command">
-                <div class="lp-ai-command-top">
-                    <div class="lp-ai-icon">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <div class="col-xl-8">
+
+        <x-ui.section-card
+            title="AI Analytics"
+            icon="fa-solid fa-chart-line">
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <div class="lp-analytics-card">
+
+                        <h6>Lead Grade Distribution</h6>
+
+                        <canvas id="leadGradeChart"></canvas>
+
                     </div>
 
-                    <div>
-                        <h5>Growth Engine Ready</h5>
-                        <p>AI discovery will start after CRM v1.0.</p>
-                    </div>
                 </div>
 
-                <div class="lp-ai-suggestion">
-                    <span>🔥</span>
-                    <div>
-                        <strong>{{ $openTasks }} follow-ups pending</strong>
-                        <small>Complete these before importing new leads.</small>
+                <div class="col-md-6">
+
+                    <div class="lp-analytics-card">
+
+                        <h6>Website Health</h6>
+
+                        <canvas id="websiteHealthChart"></canvas>
+
                     </div>
+
                 </div>
 
-                <div class="lp-ai-suggestion">
-                    <span>📅</span>
-                    <div>
-                        <strong>{{ $todayMeetings }} meetings today</strong>
-                        <small>Review notes after each meeting.</small>
+                <div class="col-md-6">
+
+                    <div class="lp-analytics-card">
+
+                        <h6>Technology Distribution</h6>
+
+                        <canvas id="technologyChart"></canvas>
+
                     </div>
+
                 </div>
 
-                <div class="lp-ai-suggestion">
-                    <span>🚀</span>
-                    <div>
-                        <strong>Lead Discovery next</strong>
-                        <small>Automatic lead engine will connect here.</small>
+                <div class="col-md-6">
+
+                    <div class="lp-analytics-card">
+
+                        <h6>Industry Distribution</h6>
+
+                        <canvas id="industryChart"></canvas>
+
                     </div>
+
                 </div>
 
-                <a href="#" class="lp-btn lp-btn-primary w-100 justify-content-center mt-3">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    Prepare AI Engine
-                </a>
             </div>
+
         </x-ui.section-card>
+
     </div>
+
+    <div class="col-xl-4">
+
+        <x-ui.section-card
+            title="Top Opportunities"
+            icon="fa-solid fa-fire">
+
+            @forelse($topOpportunities as $item)
+
+                <div class="lp-opportunity-card">
+
+                    <div>
+
+                        <strong>
+
+                            {{ $item->company->company_name }}
+
+                        </strong>
+
+                        <small>
+
+                            Grade {{ $item->lead_grade }}
+
+                            ·
+
+                            Website
+
+                            {{ optional($item->company->websiteAnalysis)->website_score ?? 0 }}
+
+                        </small>
+
+                    </div>
+
+                    <div class="lp-opportunity-score">
+
+                        {{ $item->lead_score }}
+
+                    </div>
+
+                </div>
+
+            @empty
+
+                <x-ui.empty-state
+
+                    icon="fa-solid fa-fire"
+
+                    title="No AI Opportunities"
+
+                    subtitle="Run AI analysis for companies."
+
+                />
+
+            @endforelse
+
+        </x-ui.section-card>
+
+    </div>
+
 </div>
 
 <div class="row mt-4">
@@ -185,7 +355,21 @@
 </div>
 
 <script>
-    window.dashboardStats = @json($chartData);
+
+window.dashboardStats=@json($chartData);
+
+window.aiCharts={
+
+leadGrade:@json($leadGradeChart),
+
+websiteHealth:@json($websiteHealthChart),
+
+technology:@json($technologyChart),
+
+industry:@json($industryChart)
+
+};
+
 </script>
 
 @endsection

@@ -69,12 +69,11 @@
 @endif
 
 @if($activeTab === 'ai')
-    <x-cards.card>
-        <h4>AI Insights</h4>
-        <p class="text-muted mb-0">
-            AI Company Analysis coming soon.
-        </p>
-    </x-cards.card>
+    <x-crm.company-tabs.ai
+        :company="$company"
+        :ai-profile="$aiProfile"
+        :website-analysis="$websiteAnalysis"
+    />
 @endif
 
 @endsection

@@ -291,3 +291,294 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+/* ==========================================
+   Sprint 10.2 - AI Analytics Charts
+========================================== */
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    if (typeof Chart === 'undefined') {
+        return;
+    }
+
+    if (!window.aiCharts) {
+        return;
+    }
+
+    function destroyChart(canvas) {
+
+        if (!canvas) {
+            return;
+        }
+
+        const existing = Chart.getChart(canvas);
+
+        if (existing) {
+            existing.destroy();
+        }
+
+    }
+
+    function createDoughnutChart(
+        canvasId,
+        chartData,
+        colors
+    ) {
+
+        const canvas =
+            document.getElementById(canvasId);
+
+        if (!canvas || !chartData) {
+            return;
+        }
+
+        destroyChart(canvas);
+
+        new Chart(canvas, {
+
+            type: 'doughnut',
+
+            data: {
+
+                labels: chartData.labels || [],
+
+                datasets: [
+
+                    {
+
+                        data: chartData.data || [],
+
+                        backgroundColor: colors,
+
+                        borderColor: '#ffffff',
+
+                        borderWidth: 2,
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: '68%',
+
+                plugins: {
+
+                    legend: {
+
+                        position: 'bottom',
+
+                        labels: {
+
+                            usePointStyle: true,
+
+                            boxWidth: 10
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+        function createBarChart(
+        canvasId,
+        chartData,
+        color
+    ) {
+
+        const canvas =
+            document.getElementById(canvasId);
+
+        if (!canvas || !chartData) {
+            return;
+        }
+
+        destroyChart(canvas);
+
+        new Chart(canvas, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: chartData.labels || [],
+
+                datasets: [
+
+                    {
+
+                        data: chartData.data || [],
+
+                        backgroundColor: color,
+
+                        borderRadius: 8,
+
+                        borderSkipped: false,
+
+                        maxBarThickness: 34,
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+
+                            display: false
+
+                        },
+
+                        border: {
+
+                            display: false
+
+                        },
+
+                        ticks: {
+
+                            color: '#64748B',
+
+                            font: {
+
+                                size: 11,
+
+                                weight: '700'
+
+                            }
+
+                        }
+
+                    },
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        border: {
+
+                            display: false
+
+                        },
+
+                        grid: {
+
+                            color: 'rgba(226,232,240,.75)'
+
+                        },
+
+                        ticks: {
+
+                            precision: 0,
+
+                            color: '#94A3B8'
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+        createDoughnutChart(
+
+        'leadGradeChart',
+
+        window.aiCharts.leadGrade,
+
+        [
+
+            '#10B981',
+
+            '#2563EB',
+
+            '#F59E0B',
+
+            '#F97316',
+
+            '#EF4444'
+
+        ]
+
+    );
+
+    createDoughnutChart(
+
+        'websiteHealthChart',
+
+        window.aiCharts.websiteHealth,
+
+        [
+
+            '#10B981',
+
+            '#3B82F6',
+
+            '#F59E0B',
+
+            '#EF4444'
+
+        ]
+
+    );
+
+    createBarChart(
+
+        'technologyChart',
+
+        window.aiCharts.technology,
+
+        'rgba(37,99,235,.85)'
+
+    );
+
+    createBarChart(
+
+        'industryChart',
+
+        window.aiCharts.industry,
+
+        'rgba(124,58,237,.85)'
+
+    );
+
+});

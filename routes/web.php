@@ -11,6 +11,7 @@ use App\Http\Controllers\CompanyDocumentController;
 use App\Http\Controllers\CompanyMeetingController;
 use App\Http\Controllers\CompanyCallLogController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\CompanyAiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -104,6 +105,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
   Route::delete('/companies/{companyUuid}/notes/{noteUuid}', [CompanyNoteController::class, 'destroy'])
     ->name('companies.notes.destroy');   
+
+  Route::post( '/companies/{companyUuid}/ai/analyze', [CompanyAiController::class, 'analyze'])
+    ->name('companies.ai.analyze');  
 
 });
 

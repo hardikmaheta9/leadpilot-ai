@@ -73,6 +73,12 @@
         :company="$company"
         :ai-profile="$aiProfile"
         :website-analysis="$websiteAnalysis"
+        :contacts="$contacts"
+        :tasks="$tasks"
+        :meetings="$meetings"
+        :calls="$calls"
+        :notes="$notes"
+        :documents="$documents"
     />
 @endif
 

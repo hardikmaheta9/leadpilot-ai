@@ -16,7 +16,8 @@ class CompanyIntelligenceService
         private ContactExtractor $contactExtractor,
         private LeadScoringService $leadScoringService,
         private CompanyProfiler $companyProfiler,
-        private WebsiteAnalysisStorageService $websiteStorage
+        private WebsiteAnalysisStorageService $websiteStorage,
+        private RecommendationEngine $recommendationEngine
     ) {
     }
 
@@ -87,12 +88,24 @@ class CompanyIntelligenceService
         |--------------------------------------------------------------------------
         */
 
-        $this->websiteStorage->store(
-            $company,
-            $crawlData,
-            $analysis,
-            $technologies
-        );    
+        $websiteAnalysis = $this->websiteStorage->store(
+                            $company,
+                            $crawlData,
+                            $analysis,
+                            $technologies
+                        ); 
+                        
+                        
+        /*
+        |--------------------------------------------------------------------------
+        | Generate AI Recommendations
+        |--------------------------------------------------------------------------
+        */
+
+        $recommendations = $this->recommendationEngine->generate(
+                            $company,
+                            $websiteAnalysis
+                        );                
 
         
         /*
@@ -192,6 +205,10 @@ class CompanyIntelligenceService
             'contacts' => $contacts,
 
             'scoring' => $scoring,
+
+            'website_analysis' => $websiteAnalysis,
+
+            'recommendations' => $recommendations,
         ];
     }
 

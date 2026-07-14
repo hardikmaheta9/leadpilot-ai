@@ -120,4 +120,14 @@ class Company extends Model
         );
     }
 
+
+    public function aiRecommendations()
+    {
+    return $this->hasMany(
+        CompanyAiRecommendation::class,
+        'company_uuid',
+        'uuid'
+    );
+}
+
 }

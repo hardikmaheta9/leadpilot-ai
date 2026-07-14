@@ -72,6 +72,16 @@ class CompanyController extends Controller
 
             $websiteAnalysis = $company->websiteAnalysis;
 
+            $recommendations = $company->aiRecommendations()
+                ->orderByDesc('priority_score')
+                ->orderByDesc('buying_probability')
+                ->get();
+
+            $company->setRelation(
+                'aiRecommendations',
+                $recommendations
+            );
+
             return view('companies.show', compact(
                         'company',
                         'activities',
@@ -83,7 +93,8 @@ class CompanyController extends Controller
                         'activeTab',
                         'calls',
                         'aiProfile',
-                        'websiteAnalysis'
+                        'websiteAnalysis',
+                        'recommendations'
                     ));
     }
 

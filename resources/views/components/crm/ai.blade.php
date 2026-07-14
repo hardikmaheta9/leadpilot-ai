@@ -1,3 +1,15 @@
+@props([
+    'company',
+    'aiProfile' => null,
+    'websiteAnalysis' => null,
+    'contacts' => collect(),
+    'tasks' => collect(),
+    'meetings' => collect(),
+    'calls' => collect(),
+    'notes' => collect(),
+    'documents' => collect(),
+])
+
 <div class="lp-ai-dashboard">
 
     <div class="lp-module-card">
@@ -455,6 +467,180 @@
                     </div>
 
                 @endif
+
+                @php
+                    $aiRecommendations = $company->aiRecommendations ?? collect();
+                    $totalEstimatedMin = $aiRecommendations->sum(fn ($item) => (int) ($item->estimated_value_min ?? 0));
+                    $totalEstimatedMax = $aiRecommendations->sum(fn ($item) => (int) ($item->estimated_value_max ?? 0));
+                    $averageBuyingProbability = $aiRecommendations->count()
+                        ? (int) round($aiRecommendations->avg('buying_probability'))
+                        : 0;
+                @endphp
+
+                <div class="lp-ai-insight-panel mt-4">
+                    <div class="lp-ai-panel-heading">
+                        <div>
+                            <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </span>
+                            <div>
+                                <h5>AI Recommendations & Opportunity Pipeline</h5>
+                                <p>Actionable sales opportunities generated from the latest website analysis.</p>
+                            </div>
+                        </div>
+
+                        @if($aiRecommendations->isNotEmpty())
+                            <span class="badge bg-primary-subtle text-primary border border-primary-subtle">
+                                {{ $aiRecommendations->count() }}
+                                {{ \Illuminate\Support\Str::plural('opportunity', $aiRecommendations->count()) }}
+                            </span>
+                        @endif
+                    </div>
+
+                    <div class="p-4">
+                        @if($aiRecommendations->isEmpty())
+                            <x-ui.empty-state
+                                icon="fa-solid fa-lightbulb"
+                                title="No Recommendations Yet"
+                                message="Run or repeat the website analysis to generate sales recommendations, buying probability and estimated project values."
+                            />
+                        @else
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-4">
+                                    <div class="lp-ai-metric-card h-100">
+                                        <div class="lp-ai-metric-icon lp-ai-metric-blue">
+                                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                                        </div>
+                                        <small>Estimated Pipeline</small>
+                                        <strong class="fs-5">
+                                            ₹{{ number_format($totalEstimatedMin) }} – ₹{{ number_format($totalEstimatedMax) }}
+                                        </strong>
+                                        <p class="mb-0">Combined value of all detected opportunities.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="lp-ai-metric-card h-100">
+                                        <div class="lp-ai-metric-icon lp-ai-metric-purple">
+                                            <i class="fa-solid fa-chart-line"></i>
+                                        </div>
+                                        <small>Average Buying Probability</small>
+                                        <strong>{{ $averageBuyingProbability }}%</strong>
+                                        <div class="lp-ai-progress lp-ai-progress-purple">
+                                            <span style="width: {{ min($averageBuyingProbability, 100) }}%"></span>
+                                        </div>
+                                        <p class="mb-0">Average probability across generated recommendations.</p>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="lp-ai-metric-card h-100">
+                                        <div class="lp-ai-metric-icon lp-ai-metric-blue">
+                                            <i class="fa-solid fa-fire"></i>
+                                        </div>
+                                        <small>High Priority</small>
+                                        <strong>{{ $aiRecommendations->where('priority', 'high')->count() }}</strong>
+                                        <p class="mb-0">Opportunities requiring immediate sales attention.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-4">
+                                @foreach($aiRecommendations as $recommendation)
+                                    @php
+                                        $priorityClass = match($recommendation->priority) {
+                                            'high' => 'danger',
+                                            'medium' => 'warning',
+                                            default => 'secondary',
+                                        };
+                                    @endphp
+
+                                    <div class="col-xl-6">
+                                        <div class="lp-ai-insight-panel h-100">
+                                            <div class="lp-ai-panel-heading">
+                                                <div>
+                                                    <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                                        <i class="fa-solid fa-bullseye"></i>
+                                                    </span>
+                                                    <div>
+                                                        <h5>{{ $recommendation->title }}</h5>
+                                                        <p>{{ $recommendation->recommended_service ?: 'Recommended service not specified' }}</p>
+                                                    </div>
+                                                </div>
+
+                                                <span class="badge bg-{{ $priorityClass }}-subtle text-{{ $priorityClass }} border border-{{ $priorityClass }}-subtle">
+                                                    {{ ucfirst($recommendation->priority) }} Priority
+                                                </span>
+                                            </div>
+
+                                            <div class="p-4">
+                                                @if($recommendation->description)
+                                                    <p class="text-muted">{{ $recommendation->description }}</p>
+                                                @endif
+
+                                                <div class="row g-3 mb-4">
+                                                    <div class="col-6">
+                                                        <small class="text-muted d-block">Priority Score</small>
+                                                        <strong>{{ $recommendation->priority_score }}/100</strong>
+                                                    </div>
+
+                                                    <div class="col-6">
+                                                        <small class="text-muted d-block">Buying Probability</small>
+                                                        <strong>{{ $recommendation->buying_probability }}%</strong>
+                                                    </div>
+
+                                                    <div class="col-12">
+                                                        <small class="text-muted d-block">Estimated Project Value</small>
+                                                        <strong>
+                                                            ₹{{ number_format((int) $recommendation->estimated_value_min) }} –
+                                                            ₹{{ number_format((int) $recommendation->estimated_value_max) }}
+                                                        </strong>
+                                                    </div>
+                                                </div>
+
+                                                <div class="lp-ai-progress mb-4">
+                                                    <span style="width: {{ min((int) $recommendation->buying_probability, 100) }}%"></span>
+                                                </div>
+
+                                                @if($recommendation->reason)
+                                                    <div class="mb-4">
+                                                        <small class="text-muted d-block mb-1">Why this opportunity exists</small>
+                                                        <strong class="d-block">{{ $recommendation->reason }}</strong>
+                                                    </div>
+                                                @endif
+
+                                                @if(!empty($recommendation->evidence))
+                                                    <div class="mb-4">
+                                                        <small class="text-muted d-block mb-2">Evidence</small>
+                                                        <div class="d-flex flex-wrap gap-2">
+                                                            @foreach($recommendation->evidence as $key => $value)
+                                                                <span class="badge bg-light text-dark border">
+                                                                    {{ \Illuminate\Support\Str::headline($key) }}:
+                                                                    {{ is_bool($value) ? ($value ? 'Yes' : 'No') : $value }}
+                                                                </span>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                @if(!empty($recommendation->suggested_actions))
+                                                    <div>
+                                                        <small class="text-muted d-block mb-2">Suggested Sales Actions</small>
+                                                        <ul class="mb-0 ps-3">
+                                                            @foreach($recommendation->suggested_actions as $action)
+                                                                <li class="mb-2">{{ $action }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                </div>
 
             @endif
 

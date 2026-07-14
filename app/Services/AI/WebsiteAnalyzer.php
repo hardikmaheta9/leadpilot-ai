@@ -134,7 +134,8 @@ class WebsiteAnalyzer
                         ?? $crawlData['url']
                         ?? '',
                     'https://'
-                ),
+                )
+                && ($crawlData['ssl_certificate_valid'] ?? true),
 
             'word_count' =>
                 $this->calculateWordCount($dom),

@@ -5,6 +5,7 @@ use App\Models\Task;
 use App\Models\Document;
 use App\Models\Meeting;
 use App\Models\CallLog;
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -58,6 +59,15 @@ class Company extends Model
                 $company->updated_by = auth()->id();
             }
         });
+    }
+
+    public function contacts()
+    {
+       return $this->hasMany(
+        Contact::class,
+        'company_uuid',
+        'uuid'
+     );
     }
 
     public function tasks()
@@ -128,6 +138,17 @@ class Company extends Model
         'company_uuid',
         'uuid'
     );
+    }
+
+    public function aiSalesConsultant()
+    {
+    return $this->hasOne(
+        CompanyAiSalesConsultant::class,
+        'company_uuid',
+        'uuid'
+    );
+    }
+
+    
 }
 
-}

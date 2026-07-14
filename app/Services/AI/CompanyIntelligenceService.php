@@ -17,7 +17,8 @@ class CompanyIntelligenceService
         private LeadScoringService $leadScoringService,
         private CompanyProfiler $companyProfiler,
         private WebsiteAnalysisStorageService $websiteStorage,
-        private RecommendationEngine $recommendationEngine
+        private RecommendationEngine $recommendationEngine,
+        private SalesConsultantService $salesConsultantService
     ) {
     }
 
@@ -105,7 +106,18 @@ class CompanyIntelligenceService
         $recommendations = $this->recommendationEngine->generate(
                             $company,
                             $websiteAnalysis
-                        );                
+                        );       
+                        
+                        
+        /*
+        |--------------------------------------------------------------------------
+        | Generate AI Sales Consultant
+        |--------------------------------------------------------------------------
+        */
+
+        $salesConsultant = $this->salesConsultantService->generate(
+            $company
+        );
 
         
         /*
@@ -131,6 +143,8 @@ class CompanyIntelligenceService
             $company,
             $analysis
         );
+
+
 
         /*
         |--------------------------------------------------------------------------
@@ -209,6 +223,8 @@ class CompanyIntelligenceService
             'website_analysis' => $websiteAnalysis,
 
             'recommendations' => $recommendations,
+
+            'sales_consultant' => $salesConsultant,
         ];
     }
 

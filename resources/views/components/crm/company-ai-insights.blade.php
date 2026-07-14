@@ -2,12 +2,14 @@
     'company',
     'aiProfile' => null,
     'websiteAnalysis' => null,
+    'aiSalesConsultant' => null,
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
     'calls' => collect(),
     'notes' => collect(),
     'documents' => collect(),
+
 ])
 
 @php
@@ -828,6 +830,454 @@
             </div>
         </div>
 
+        <div class="lp-ai-insight-panel mt-4">
+
+    <div class="lp-ai-panel-heading">
+
+        <div>
+            <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                <i class="fa-solid fa-user-tie"></i>
+            </span>
+
+            <div>
+                <h5>AI Sales Consultant</h5>
+
+                <p>
+                    Sales strategy, opportunity value and recommended next actions.
+                </p>
+            </div>
+        </div>
+
+        @if($aiSalesConsultant)
+            <span class="badge bg-success-subtle text-success border">
+                Generated
+            </span>
+        @endif
+
+    </div>
+
+    <div class="p-4">
+
+        @if(!$aiSalesConsultant)
+
+            <x-ui.empty-state
+                icon="fa-solid fa-user-tie"
+                title="Sales Consultant Not Generated"
+                message="Run or repeat the website analysis to generate the AI sales strategy."
+            />
+
+        @else
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-4">
+
+                    <div class="lp-ai-metric-card h-100">
+
+                        <div class="lp-ai-metric-icon lp-ai-metric-blue">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+
+                        <small>Opportunity Score</small>
+
+                        <strong>
+                            {{ $aiSalesConsultant->opportunity_score }}/100
+                        </strong>
+
+                        <div class="lp-ai-progress">
+                            <span
+                                style="width: {{ min((int) $aiSalesConsultant->opportunity_score, 100) }}%">
+                            </span>
+                        </div>
+
+                        <p class="mb-0">
+                            Overall attractiveness of this sales opportunity.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="lp-ai-metric-card h-100">
+
+                        <div class="lp-ai-metric-icon lp-ai-metric-purple">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <small>Buying Probability</small>
+
+                        <strong>
+                            {{ $aiSalesConsultant->buying_probability }}%
+                        </strong>
+
+                        <div class="lp-ai-progress lp-ai-progress-purple">
+                            <span
+                                style="width: {{ min((int) $aiSalesConsultant->buying_probability, 100) }}%">
+                            </span>
+                        </div>
+
+                        <p class="mb-0">
+                            Estimated probability based on detected business signals.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="lp-ai-metric-card h-100">
+
+                        <div class="lp-ai-metric-icon lp-ai-metric-blue">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+
+                        <small>Estimated Deal Value</small>
+
+                        <strong class="fs-5">
+                            ₹{{ number_format((int) $aiSalesConsultant->estimated_deal_value) }}
+                        </strong>
+
+                        <p class="mb-0">
+                            Estimated combined value of the recommended package.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-xl-8">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Executive Summary</h5>
+                                    <p>AI-generated pre-sales assessment.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <p class="mb-0 text-muted">
+                                {{ $aiSalesConsultant->executive_summary ?: 'No executive summary available.' }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-4">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Service Bundle</h5>
+                                    <p>Recommended services.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <div class="d-flex flex-wrap gap-2">
+
+                                @forelse($aiSalesConsultant->service_bundle ?? [] as $service)
+
+                                    <span class="badge bg-light text-dark border">
+                                        {{ $service }}
+                                    </span>
+
+                                @empty
+
+                                    <span class="text-muted small">
+                                        No service bundle available.
+                                    </span>
+
+                                @endforelse
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row g-4 mt-1">
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-red">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Detected Pain Points</h5>
+                                    <p>Problems to address during outreach.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <div class="text-muted" style="white-space: pre-line;">
+                                {{ $aiSalesConsultant->pain_points ?: 'No pain points detected.' }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Recommended Opportunities</h5>
+                                    <p>Potential services and projects.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <div class="text-muted" style="white-space: pre-line;">
+                                {{ $aiSalesConsultant->opportunities ?: 'No opportunities available.' }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row g-4 mt-1">
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-chess"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Sales Strategy</h5>
+                                    <p>Recommended positioning and approach.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <p class="mb-0 text-muted">
+                                {{ $aiSalesConsultant->sales_strategy ?: 'No sales strategy available.' }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-comments"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Objection Handling</h5>
+                                    <p>Suggested responses to common concerns.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <p class="mb-0 text-muted">
+                                {{ $aiSalesConsultant->objection_handling ?: 'No objection guidance available.' }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row g-4 mt-1">
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-users"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Decision Makers</h5>
+                                    <p>Recommended people to approach.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <div class="text-muted" style="white-space: pre-line;">
+                                {{ $aiSalesConsultant->decision_makers ?: 'No decision-maker guidance available.' }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="fa-solid fa-forward-step"></i>
+                                </span>
+
+                                <div>
+                                    <h5>Next Best Action</h5>
+                                    <p>Recommended immediate sales action.</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            <div class="lp-ai-next-action">
+
+                                <div class="lp-ai-next-action-icon">
+                                    <i class="fa-solid fa-arrow-trend-up"></i>
+                                </div>
+
+                                <div>
+                                    <small>Recommended Action</small>
+
+                                    <strong>
+                                        {{ $aiSalesConsultant->next_best_action ?: 'No next action available.' }}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="lp-ai-insight-panel mt-4">
+
+                <div class="lp-ai-panel-heading">
+
+                    <div>
+                        <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                            <i class="fa-solid fa-box-open"></i>
+                        </span>
+
+                        <div>
+                            <h5>Recommended Package</h5>
+                            <p>Suggested combined solution.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="p-4">
+
+                    <p class="mb-0 text-muted">
+                        {{ $aiSalesConsultant->recommended_package ?: 'No recommended package available.' }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        @endif
+
+    </div>
+
+</div>
+
+    
+
+
+
+        
     </div>
 
 </div>

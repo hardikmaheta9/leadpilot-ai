@@ -2,12 +2,14 @@
     'company',
     'aiProfile' => null,
     'websiteAnalysis' => null,
+    'aiSalesConsultant' => null,
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
     'calls' => collect(),
     'notes' => collect(),
     'documents' => collect(),
+    
 ])
 
 <div class="lp-ai-dashboard">

@@ -72,6 +72,8 @@ class CompanyController extends Controller
 
             $websiteAnalysis = $company->websiteAnalysis;
 
+            $aiSalesConsultant = $company->aiSalesConsultant;
+
             $recommendations = $company->aiRecommendations()
                 ->orderByDesc('priority_score')
                 ->orderByDesc('buying_probability')
@@ -94,8 +96,10 @@ class CompanyController extends Controller
                         'calls',
                         'aiProfile',
                         'websiteAnalysis',
-                        'recommendations'
-                    ));
+                        'recommendations',
+                        'aiSalesConsultant',
+                    )
+            );
     }
 
     public function edit(string $uuid): View

@@ -2,6 +2,7 @@
     'company',
     'aiProfile' => null,
     'websiteAnalysis' => null,
+    'aiSalesConsultant' => null,
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
@@ -14,6 +15,7 @@
     :company="$company"
     :ai-profile="$aiProfile"
     :website-analysis="$websiteAnalysis"
+    :ai-sales-consultant="$aiSalesConsultant"
     :contacts="$contacts"
     :tasks="$tasks"
     :meetings="$meetings"

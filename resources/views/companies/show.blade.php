@@ -80,7 +80,7 @@
         :calls="$calls"
         :notes="$notes"
         :documents="$documents"
-        
+        :ai-generated-contents="$aiGeneratedContents"
     />
 @endif
 

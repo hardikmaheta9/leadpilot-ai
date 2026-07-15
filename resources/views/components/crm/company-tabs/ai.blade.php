@@ -3,12 +3,14 @@
     'aiProfile' => null,
     'websiteAnalysis' => null,
     'aiSalesConsultant' => null,
+    'aiGeneratedContents' => collect(),
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
     'calls' => collect(),
     'notes' => collect(),
     'documents' => collect(),
+    
 ])
 
 <x-crm.company-ai-insights
@@ -16,10 +18,12 @@
     :ai-profile="$aiProfile"
     :website-analysis="$websiteAnalysis"
     :ai-sales-consultant="$aiSalesConsultant"
+    :ai-generated-contents="$aiGeneratedContents"
     :contacts="$contacts"
     :tasks="$tasks"
     :meetings="$meetings"
     :calls="$calls"
     :notes="$notes"
     :documents="$documents"
+    
 />

@@ -12,6 +12,7 @@ use App\Http\Controllers\CompanyMeetingController;
 use App\Http\Controllers\CompanyCallLogController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CompanyAiController;
+use App\Http\Controllers\AIContentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -107,7 +108,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
     ->name('companies.notes.destroy');   
 
   Route::post( '/companies/{companyUuid}/ai/analyze', [CompanyAiController::class, 'analyze'])
-    ->name('companies.ai.analyze');  
+    ->name('companies.ai.analyze'); 
+    
+  Route::prefix('companies/{company}/ai-content')
+    ->name('companies.ai-content.')
+    ->group(function () {
+
+        Route::post(
+            '/generate-all',
+            [AIContentController::class, 'generateAll']
+        )->name('generate-all');
+
+        Route::post(
+            '/generate/{type}',
+            [AIContentController::class, 'generate']
+        )->name('generate');
+
+    });
 
 });
 

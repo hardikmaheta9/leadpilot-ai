@@ -3,6 +3,7 @@
     'aiProfile' => null,
     'websiteAnalysis' => null,
     'aiSalesConsultant' => null,
+    'aiGeneratedContents' => collect(),
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
@@ -1272,12 +1273,198 @@
     </div>
 
 </div>
-
-    
-
-
-
-        
+       
     </div>
 
+
+    <div class="lp-ai-insight-panel mt-4">
+
+    <div class="lp-ai-panel-heading">
+
+        <div>
+            <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                <i class="fa-solid fa-pen-nib"></i>
+            </span>
+
+            <div>
+                <h5>AI Sales Content</h5>
+                <p>
+                    Generate personalized outreach and sales material for this company.
+                </p>
+            </div>
+        </div>
+
+        <form
+            method="POST"
+            action="{{ route('companies.ai-content.generate-all', $company) }}"
+        >
+            @csrf
+
+            <button type="submit" class="lp-btn lp-btn-primary">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Generate All
+            </button>
+        </form>
+
+    </div>
+
+    <div class="p-4">
+
+        @php
+            $contentTypes = [
+                'cold_email' => [
+                    'title' => 'Cold Email',
+                    'icon' => 'fa-solid fa-envelope',
+                ],
+                'followup_email' => [
+                    'title' => 'Follow-up Email',
+                    'icon' => 'fa-solid fa-reply',
+                ],
+                'linkedin_message' => [
+                    'title' => 'LinkedIn Message',
+                    'icon' => 'fa-brands fa-linkedin',
+                ],
+                'whatsapp_message' => [
+                    'title' => 'WhatsApp Message',
+                    'icon' => 'fa-brands fa-whatsapp',
+                ],
+                'call_script' => [
+                    'title' => 'Sales Call Script',
+                    'icon' => 'fa-solid fa-phone',
+                ],
+                'meeting_agenda' => [
+                    'title' => 'Meeting Agenda',
+                    'icon' => 'fa-solid fa-calendar-check',
+                ],
+                'elevator_pitch' => [
+                    'title' => 'Elevator Pitch',
+                    'icon' => 'fa-solid fa-bullhorn',
+                ],
+            ];
+        @endphp
+
+        <div class="row g-4">
+
+            @foreach($contentTypes as $type => $meta)
+
+                @php
+                    $generatedContent = $aiGeneratedContents->get($type);
+                @endphp
+
+                <div class="col-xl-6">
+
+                    <div class="lp-ai-insight-panel h-100">
+
+                        <div class="lp-ai-panel-heading">
+
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue">
+                                    <i class="{{ $meta['icon'] }}"></i>
+                                </span>
+
+                                <div>
+                                    <h5>{{ $meta['title'] }}</h5>
+
+                                    <p>
+                                        @if($generatedContent)
+                                            Version {{ $generatedContent->version }}
+                                            · Generated
+                                            {{ optional($generatedContent->generated_at)->diffForHumans() }}
+                                        @else
+                                            Not generated yet
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+
+                            <form
+                                method="POST"
+                                action="{{ route('companies.ai-content.generate', [$company, $type]) }}"
+                            >
+                                @csrf
+
+                                <button
+                                    type="submit"
+                                    class="lp-btn lp-btn-light"
+                                >
+                                    <i class="fa-solid fa-rotate"></i>
+
+                                    {{ $generatedContent ? 'Regenerate' : 'Generate' }}
+                                </button>
+                            </form>
+
+                        </div>
+
+                        <div class="p-4">
+
+                            @if($generatedContent)
+
+                                @if($generatedContent->subject)
+
+                                    <div class="mb-3">
+
+                                        <small class="text-muted d-block mb-1">
+                                            Subject
+                                        </small>
+
+                                        <strong class="d-block">
+                                            {{ $generatedContent->subject }}
+                                        </strong>
+
+                                    </div>
+
+                                @endif
+
+                                <div
+                                    class="lp-ai-generated-content"
+                                    id="ai-content-{{ $type }}"
+                                    style="white-space: pre-line;"
+                                >
+                                    {{ $generatedContent->content }}
+                                </div>
+
+                                <div class="d-flex gap-2 flex-wrap mt-4">
+
+                                    <button
+                                        type="button"
+                                        class="lp-btn lp-btn-light"
+                                        data-copy-target="ai-content-{{ $type }}"
+                                    >
+                                        <i class="fa-regular fa-copy"></i>
+                                        Copy
+                                    </button>
+
+                                    <span class="badge bg-light text-dark border align-self-center">
+                                        {{ ucfirst($generatedContent->generator) }}
+                                    </span>
+
+                                    <span class="badge bg-light text-dark border align-self-center">
+                                        Version {{ $generatedContent->version }}
+                                    </span>
+
+                                </div>
+
+                            @else
+
+                                <x-ui.empty-state
+                                    icon="{{ $meta['icon'] }}"
+                                    title="{{ $meta['title'] }} Not Generated"
+                                    message="Generate this content using the company profile, website intelligence and AI sales consultant data."
+                                />
+
+                            @endif
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @endforeach
+
+        </div>
+
+    </div>
+
+</div>
 </div>

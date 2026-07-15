@@ -6,6 +6,7 @@ use App\Models\Document;
 use App\Models\Meeting;
 use App\Models\CallLog;
 use App\Models\Contact;
+use App\Models\CompanyAiGeneratedContent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -147,6 +148,19 @@ class Company extends Model
         'company_uuid',
         'uuid'
     );
+    }
+
+    public function aiGeneratedContents()
+    {
+        return $this->hasMany(
+
+            CompanyAiGeneratedContent::class,
+
+            'company_uuid',
+
+            'uuid'
+
+        );
     }
 
     

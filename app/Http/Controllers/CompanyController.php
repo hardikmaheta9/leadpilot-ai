@@ -84,6 +84,13 @@ class CompanyController extends Controller
                 $recommendations
             );
 
+            $aiGeneratedContents = $company->aiGeneratedContents()
+                ->orderBy('content_type')
+                ->orderByDesc('version')
+                ->get()
+                ->groupBy('content_type')
+                ->map(fn ($items) => $items->first());
+
             return view('companies.show', compact(
                         'company',
                         'activities',
@@ -98,6 +105,7 @@ class CompanyController extends Controller
                         'websiteAnalysis',
                         'recommendations',
                         'aiSalesConsultant',
+                        'aiGeneratedContents',
                     )
             );
     }

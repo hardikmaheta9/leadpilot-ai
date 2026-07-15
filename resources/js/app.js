@@ -1290,4 +1290,37 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     );
 
+
+    document.addEventListener('click', function (event) {
+    const button = event.target.closest('[data-copy-target]');
+
+    if (!button) {
+        return;
+    }
+
+    const targetId = button.dataset.copyTarget;
+    const target = document.getElementById(targetId);
+
+    if (!target) {
+        return;
+    }
+
+    const text = target.innerText.trim();
+
+    navigator.clipboard.writeText(text)
+        .then(function () {
+            const originalHtml = button.innerHTML;
+
+            button.innerHTML =
+                '<i class="fa-solid fa-check"></i> Copied';
+
+            setTimeout(function () {
+                button.innerHTML = originalHtml;
+            }, 1500);
+        })
+        .catch(function () {
+            alert('Unable to copy the content.');
+        });
+    });
+
 });

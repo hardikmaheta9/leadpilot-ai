@@ -74,6 +74,7 @@
         :ai-profile="$aiProfile"
         :website-analysis="$websiteAnalysis"
         :ai-sales-consultant="$aiSalesConsultant"
+        :ai-proposals="$aiProposals"
         :contacts="$contacts"
         :tasks="$tasks"
         :meetings="$meetings"

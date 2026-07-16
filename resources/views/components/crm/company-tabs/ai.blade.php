@@ -4,12 +4,14 @@
     'websiteAnalysis' => null,
     'aiSalesConsultant' => null,
     'aiGeneratedContents' => collect(),
+    'aiProposals' => collect(),
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
     'calls' => collect(),
     'notes' => collect(),
     'documents' => collect(),
+    
     
 ])
 
@@ -19,6 +21,7 @@
     :website-analysis="$websiteAnalysis"
     :ai-sales-consultant="$aiSalesConsultant"
     :ai-generated-contents="$aiGeneratedContents"
+    :ai-proposals="$aiProposals"
     :contacts="$contacts"
     :tasks="$tasks"
     :meetings="$meetings"

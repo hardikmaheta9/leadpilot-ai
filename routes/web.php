@@ -13,6 +13,7 @@ use App\Http\Controllers\CompanyCallLogController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CompanyAiController;
 use App\Http\Controllers\AIContentController;
+use App\Http\Controllers\AIProposalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -125,7 +126,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         )->name('generate');
 
     });
+  
 
 });
+
+require __DIR__.'/proposals.php';
 
 require __DIR__.'/auth.php';

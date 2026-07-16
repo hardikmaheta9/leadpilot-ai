@@ -7,6 +7,7 @@ use App\Models\Meeting;
 use App\Models\CallLog;
 use App\Models\Contact;
 use App\Models\CompanyAiGeneratedContent;
+use App\Models\CompanyAiProposal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -160,6 +161,15 @@ class Company extends Model
 
             'uuid'
 
+        );
+    }
+
+    public function aiProposals()
+    {
+        return $this->hasMany(
+            CompanyAiProposal::class,
+            'company_uuid',
+            'uuid'
         );
     }
 

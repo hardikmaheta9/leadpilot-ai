@@ -4,6 +4,7 @@
     'websiteAnalysis' => null,
     'aiSalesConsultant' => null,
     'aiGeneratedContents' => collect(),
+    'aiProposals' => collect(),
     'contacts' => collect(),
     'tasks' => collect(),
     'meetings' => collect(),
@@ -1467,4 +1468,55 @@
     </div>
 
 </div>
+
+
+<!-- AI Proposal Builder -->
+ @include('components.crm.proposal-panel')
+<!--<div class="lp-ai-insight-panel mt-4">
+    <div class="lp-ai-panel-heading">
+        <div>
+            <span class="lp-ai-panel-icon lp-ai-panel-icon-blue"><i class="fa-solid fa-file-signature"></i></span>
+            <div>
+                <h5>AI Proposal Builder</h5>
+                <p>Generate a professional proposal using AI recommendations, website intelligence and sales consultant data.</p>
+            </div>
+        </div>
+        <form method="POST" action="{{ route('companies.proposal.generate', $company) }}">
+            @csrf
+            <button type="submit" class="lp-btn lp-btn-primary">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Generate Proposal
+            </button>
+        </form>
+    </div>
+    <div class="p-4">
+        @if($aiProposals->isEmpty())
+            <x-ui.empty-state icon="fa-solid fa-file-signature" title="No Proposal Generated" message="Generate your first AI proposal." />
+        @else
+            <div class="row g-4">
+                @foreach($aiProposals as $proposal)
+                <div class="col-md-6">
+                    <div class="lp-ai-insight-panel h-100">
+                        <div class="lp-ai-panel-heading">
+                            <div>
+                                <span class="lp-ai-panel-icon lp-ai-panel-icon-blue"><i class="fa-solid fa-file-lines"></i></span>
+                                <div>
+                                    <h5>{{ $proposal->proposal_title }}</h5>
+                                    <p>Version {{ $proposal->version }} · {{ optional($proposal->generated_at)->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <a href="{{ route('companies.proposal.show', [$company, $proposal]) }}" target="_blank" class="lp-btn lp-btn-primary">
+                                <i class="fa-solid fa-eye"></i> View Proposal
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
+</div>-->
+
 </div>

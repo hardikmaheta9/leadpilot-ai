@@ -91,6 +91,11 @@ class CompanyController extends Controller
                 ->groupBy('content_type')
                 ->map(fn ($items) => $items->first());
 
+            
+            $aiProposals = $company->aiProposals()
+                ->latest('version')
+                ->get();
+            
             return view('companies.show', compact(
                         'company',
                         'activities',
@@ -106,6 +111,7 @@ class CompanyController extends Controller
                         'recommendations',
                         'aiSalesConsultant',
                         'aiGeneratedContents',
+                        'aiProposals',
                     )
             );
     }
